@@ -23,4 +23,4 @@ COPY . /app
 EXPOSE 3000
 
 # Start the application.
-CMD ["node", "/app/servernd.js"]
+CMD ["npm", "start"]
