@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "fuser -k 3000/tcp && nodemon ./src/servernd.js",
+    "start": "node /app/servernd.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
