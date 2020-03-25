@@ -26,3 +26,20 @@ Outils de création, de validation et de gestion de projets
   * Angular
   * NodeJS / NPM
   * Docker
+  
+## Installation
+
+**Avant de proceder :** veuillez bien lire les [pré requis](#Logiciels requis)
+
+## Utilisation
+
+```bash
+ng help
+```
+
+### Generation d'un projet
+
+```bash
+ng new NOM-DU-PROJET
+cd NOM-DU-PROJET
+```
