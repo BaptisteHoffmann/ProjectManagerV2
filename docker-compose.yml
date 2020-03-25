@@ -18,18 +18,18 @@ services:
       # Add the database service to the servernetwork.
       - applinetwork
 
+  angular-app: # name of the first service
+    build: my-app # specify the directory of the Dockerfile
+    ports:
+      - "80:80" # specify port forewarding
+    networks:
+      # Add the angular service to the servernetwork.
+      - applinetwork
+
   express-app: #name of the second service
     build: express-server # specify the directory of the Dockerfile
     ports:
       - "3000:3000" #specify ports forewarding
     networks:
       # Add the express service to the servernetwork.
-      - applinetwork
-
-  angular-app: # name of the first service
-    build: my-app # specify the directory of the Dockerfile
-    ports:
-      - "4200:4200" # specify port forewarding
-    networks:
-      # Add the angular service to the servernetwork.
       - applinetwork
