@@ -21,7 +21,7 @@ services:
   angular-app: # name of the first service
     build: my-app # specify the directory of the Dockerfile
     ports:
-      - "80:80" # specify port forewarding
+      - "4200:4200" # specify port forewarding
     networks:
       # Add the angular service to the servernetwork.
       - applinetwork
