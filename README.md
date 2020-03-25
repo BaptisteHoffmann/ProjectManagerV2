@@ -49,9 +49,16 @@ ng help
 ### Generation d'un projet
 
 ```bash
-ng new NOM-DU-PROJET
-cd NOM-DU-PROJET
+ng new NOM-DU-PROJET-ANGULAR
+cd NOM-DU-PROJET-ANGULAR
 ```
+
+### Copier le contenu du dossier angular-app à la racine du projet Angular crée précédemment
+
+```bash
+cp ~/ProjectManager/angular-app ~/ProjectManager/NOM-DU-PROJET-ANGULAR/
+```
+
 
 ### Verification du fonctionnement de Docker
 
@@ -64,3 +71,6 @@ docker version
 ```bash
 docker-compose version
 ```
+
+## Utilisation de Docker-compose
+
