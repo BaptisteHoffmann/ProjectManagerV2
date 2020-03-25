@@ -24,11 +24,14 @@ COPY . /app
 
 CMD ["npm", "start"]
 
+# expose port 4200
+EXPOSE 4200
+
 ############
 ### prod ###
 ############
 
-# # base image
+# base image
 # FROM nginx:1.16.0-alpine
 
 # # copy artifact build from the 'build environment'
