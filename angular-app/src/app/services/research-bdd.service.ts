@@ -16,7 +16,7 @@ export class ResearchBDDService {
 
   getEtatProjetClient(iduser: number): Observable<any> {
     console.log(iduser);
-    const url: string = 'http://192.168.176.26:3000/demandes/' + iduser;
+    const url: string = 'http://express-app:3000/demandes/' + iduser;
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
@@ -24,21 +24,21 @@ export class ResearchBDDService {
 
   getResumeProjetClient(iduser: string, iddemande: string): Observable<any> {
     console.log(iduser, iddemande);
-    const url: string = 'http://192.168.176.26:3000/resumeprojet/' + iduser + '/' + iddemande;
+    const url: string = 'http://express-app:3000/resumeprojet/' + iduser + '/' + iddemande;
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
   }
 
   getChiffrageClient(iduser: string, iddemande: string): Observable<any> {
-    const url: string = 'http://192.168.176.26:3000/chiffrageclient/' + iduser + '/' + iddemande;
+    const url: string = 'http://express-app:3000/chiffrageclient/' + iduser + '/' + iddemande;
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
   }
 
   getResumePerimetreClient(iduser: string, iddemande: string): Observable<any> {
-    const url: string = 'http://192.168.176.26:3000/resumeperimetreclient/' + iduser + '/' + iddemande;
+    const url: string = 'http://express-app:3000/resumeperimetreclient/' + iduser + '/' + iddemande;
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
@@ -46,7 +46,7 @@ export class ResearchBDDService {
 
   setCommentaireChiffrage(iddemande: string, formulaireForm: FormGroup) {
     console.log(formulaireForm.value);
-    const url = 'http://192.168.176.26:3000/commentairechiffrageclient';
+    const url = 'http://express-app:3000/commentairechiffrageclient';
     const data = { repChiffrageClient: formulaireForm.value, id: iddemande };
 
     const httpOptions = {
@@ -63,42 +63,42 @@ export class ResearchBDDService {
 
   // ADMIN
   getResumeProjetAdmin(iduser: string, iddemande: string): Observable<any> {
-    const url: string = 'http://192.168.176.26:3000/resumeprojetadmin/' + iduser + '/' + iddemande;
+    const url: string = 'http://express-app:3000/resumeprojetadmin/' + iduser + '/' + iddemande;
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
   }
 
   getFormulaireAdmin(iduser: string, iddemande: string): Observable<any> {
-    const url: string = 'http://192.168.176.26:3000/formulaireadmintab/' + iduser + '/' + iddemande;
+    const url: string = 'http://express-app:3000/formulaireadmintab/' + iduser + '/' + iddemande;
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
   }
 
   getChiffrageAdmin(iduser: string, iddemande: string): Observable<any> {
-    const url: string = 'http://192.168.176.26:3000/chiffrageadmin/' + iduser + '/' + iddemande;
+    const url: string = 'http://express-app:3000/chiffrageadmin/' + iduser + '/' + iddemande;
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
   }
 
   getResumePerimetreAdmin(iduser: string, iddemande: string): Observable<any> {
-    const url: string = 'http://192.168.176.26:3000/resumeperimetreadmin/' + iduser + '/' + iddemande;
+    const url: string = 'http://express-app:3000/resumeperimetreadmin/' + iduser + '/' + iddemande;
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
   }
 
   getEtatProjetAdmin() {
-    const url = 'http://192.168.176.26:3000/demandesadmin';
+    const url = 'http://express-app:3000/demandesadmin';
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
   }
 
   getDroitUtilisateurAdmin(iduser: string, iddemande: string): Observable<any> {
-    const url: string = 'http://192.168.176.26:3000/droitutilisateuradmin/' + iduser + '/' + iddemande;
+    const url: string = 'http://express-app:3000/droitutilisateuradmin/' + iduser + '/' + iddemande;
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
@@ -106,7 +106,7 @@ export class ResearchBDDService {
 
   setEtatProjetTraiteAdmin(id: string, etat: number) { // A finir
     console.log(id);
-    const url = 'http://192.168.176.26:3000/etat/';
+    const url = 'http://express-app:3000/etat/';
     const data = { IdDemande: id , IdEtat: etat};
 
     const httpOptions = {
@@ -119,7 +119,7 @@ export class ResearchBDDService {
 
   setValeurTotal(id: string, calcul: string) { // A finir
     console.log(id);
-    const url = 'http://192.168.176.26:3000/total/';
+    const url = 'http://express-app:3000/total/';
     const data = { IdDemande: id , calcul : calcul};
 
     const httpOptions = {
@@ -132,7 +132,7 @@ export class ResearchBDDService {
 
   setCreationUser(formulaireForm: FormGroup) {
     console.log(formulaireForm.value);
-    const url = 'http://192.168.176.26:3000/creationuser';
+    const url = 'http://express-app:3000/creationuser';
     const data = { user: formulaireForm.value };
 
     const httpOptions = {
@@ -144,28 +144,28 @@ export class ResearchBDDService {
   }
 
   getUtilisateurs() {
-    const url = 'http://192.168.176.26:3000/listusers';
+    const url = 'http://express-app:3000/listusers';
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
   }
 
   getUtilisateurInfos(iduser: string) {
-    const url = 'http://192.168.176.26:3000/userinfos/' + iduser;
+    const url = 'http://express-app:3000/userinfos/' + iduser;
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
   }
 
   getCountDemandes() {
-    const url = 'http://192.168.176.26:3000/countdemandes';
+    const url = 'http://express-app:3000/countdemandes';
     const observable: Observable<any> =
     this.http.get(url);
     return observable;
   }
 
   setDeleteUser(IdUser: string): Observable<any> {
-    const url = 'http://192.168.176.26:3000/deleteuser';
+    const url = 'http://express-app:3000/deleteuser';
     const data = { idUser: IdUser };
 
     // console.log(JSON.stringify(data));
@@ -180,7 +180,7 @@ export class ResearchBDDService {
 
   setUserInfos(iduser: string, formulaireUser: FormGroup): Observable<any> {
     console.log(iduser);
-    const url = 'http://192.168.176.26:3000/userinfos/update';
+    const url = 'http://express-app:3000/userinfos/update';
     const data = { idUser: iduser, formulaireuser: formulaireUser.value };
 
     const httpOptions = {

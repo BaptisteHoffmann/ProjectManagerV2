@@ -11,14 +11,14 @@ export class DemandeClientService {
   constructor(private http: HttpClient) {}
 
 //   getProducts(): Observable<any> {
-//     let url: string = "http://192.168.176.26:3000/products";
+//     let url: string = "http://express-app:3000/products";
 //     let observable: Observable<any> =
 //       this.http.get(url);
 //     return observable;
 //   }
 
   setFormulaireClient(formulaireForm: FormGroup, perimetreForm: FormGroup): Observable<any> {
-    const url = 'http://192.168.176.26:3000/formulaireclient';
+    const url = 'http://express-app:3000/formulaireclient';
     const data = { formulaireForm: formulaireForm.value, perimetreForm: perimetreForm.value };
 
     // console.log(JSON.stringify(data));
@@ -32,7 +32,7 @@ export class DemandeClientService {
   }
 
   setFormulaireAdmin(IdDemande: string, sousetapeForm: FormGroup): Observable<any> {
-    const url = 'http://192.168.176.26:3000/formulaireadmin/' + IdDemande;
+    const url = 'http://express-app:3000/formulaireadmin/' + IdDemande;
     const data = { formulaireAdmin: sousetapeForm.value};
 
     // console.log(JSON.stringify(data));
@@ -46,7 +46,7 @@ export class DemandeClientService {
   }
 
   getFormulaireAdmin(IdDemande: string): Observable<any> {
-    const url: string = 'http://192.168.176.26:3000/formulaireadmintab/' + IdDemande;
+    const url: string = 'http://express-app:3000/formulaireadmintab/' + IdDemande;
     // const httpOptions = {
      // headers: new HttpHeaders({
        // 'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ export class DemandeClientService {
 
 
   setDeleteFormulaire(IdLigne: string, IdDemande: string): Observable<any> {
-    const url = 'http://192.168.176.26:3000/deleteligneform';
+    const url = 'http://express-app:3000/deleteligneform';
     const data = { idLigne: IdLigne, idDemande : IdDemande };
 
     // console.log(JSON.stringify(data));

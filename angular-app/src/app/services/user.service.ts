@@ -9,6 +9,6 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<any[]>(`192.168.176.26/users`);
+        return this.http.get<any[]>(`express-app/users`);
     }
 }
