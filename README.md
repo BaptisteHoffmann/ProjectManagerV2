@@ -52,3 +52,15 @@ ng help
 ng new NOM-DU-PROJET
 cd NOM-DU-PROJET
 ```
+
+### Verification du fonctionnement de Docker
+
+```bash
+docker version
+```
+
+### Verification du fonctionnement de Docker-compose
+
+```bash
+docker-compose version
+```
