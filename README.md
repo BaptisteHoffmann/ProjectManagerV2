@@ -74,3 +74,42 @@ docker-compose version
 
 ## Utilisation de Docker-compose
 
+**Avant d'utiliser le fichier docker-compose.yml :** il faut modifier le nom du projet angular dans le fichier docker-compose comme indiqué en bas
+
+```bash
+version: '3.7' # specify docker-compose version
+
+networks:
+  # Server network to hold database and backend
+  applinetwork: {}
+
+# Define the services/containers to be run
+services:
+  
+  database: # name of the third service
+    build: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: 8CFmTxG4r5oSS7IYvT2N
+      MYSQL_DATABASE: retest
+    ports:
+      - "3306:3306" # specify port forewarding
+    networks:
+      # Add the database service to the servernetwork.
+      - applinetwork
+
+  express: #name of the second service
+    build: express-server # specify the directory of the Dockerfile
+    ports:
+      - "3000:3000" #specify ports forewarding
+    networks:
+      # Add the express service to the servernetwork.
+      - applinetwork
+
+  angular: # name of the first service
+    build: CHANGEZ LE NOM PAR LE NOM DU PROJET ANGULAR # specify the directory of the Dockerfile
+    ports:
+      - "4200:4200" # specify port forewarding
+    networks:
+      # Add the angular service to the servernetwork.
+      - applinetwork
+```
