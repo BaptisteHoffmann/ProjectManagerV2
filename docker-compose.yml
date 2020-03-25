@@ -28,8 +28,12 @@ services:
 
   express-app: #name of the second service
     build: express-server # specify the directory of the Dockerfile
+    restart: always
     ports:
       - "3000:3000" #specify ports forewarding
     networks:
       # Add the express service to the servernetwork.
       - applinetwork
+    depends_on:
+      - "database-app"
+    command: bash -c "./wait-for-it.sh --timeout=0 database-app:3306 && npm start"
