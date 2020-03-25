@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ResearchBDDService } from '../services/research-bdd.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '@app/services/authentication.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-user',
