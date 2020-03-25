@@ -18,9 +18,11 @@ RUN npm install
 # add app
 COPY . /app
 
+RUN chmod +x wait-for-it.sh
+
 
 # Indicate that we use 3000. Maybe configurable.
 EXPOSE 3000
 
 # Start the application.
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
