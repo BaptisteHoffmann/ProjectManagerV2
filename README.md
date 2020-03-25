@@ -29,9 +29,18 @@ Outils de création, de validation et de gestion de projets
   
 ## Installation
 
-**Avant de proceder :** veuillez bien lire les [pré requis](#Logiciels requis)
+**Avant de proceder :** veuillez bien installer les outils en pré requis
 
-## Utilisation
+## Utilisation des differents outils
+
+
+### Obtenir les fichiers sources pour le fonctionnement de l'application
+
+```bash
+git clone https://github.com/AhmedALSGit/ProjectManager.git
+```
+
+### Verification du fonctionnement d'Angular
 
 ```bash
 ng help
