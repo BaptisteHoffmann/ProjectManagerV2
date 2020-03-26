@@ -124,3 +124,37 @@ On doit pouvoir exécuter la commande docker-compose décrit ci-dessous :
 ```bash
 docker-compose -f docker-compose.yml up -d --build
 ```
+
+Une fois le script lancer, il devrait passer par 9 étapes au total (voir ci-dessous)
+
+```bash
+Creating network "projectmanager_applinetwork" with the default driver
+Building database-app
+Step 1/2 : FROM mariadb:10.1
+ ---> 97b484de89b8
+Step 2/2 : ADD ./database_file /docker-entrypoint-initdb.d
+ ---> Using cache
+ ---> 889bb63851e1
+
+Successfully built 889bb63851e1
+Successfully tagged projectmanager_database-app:latest
+Building angular-app
+Step 1/9 : FROM node:12.16.1 as build
+ ---> d834cbcf2402
+Step 2/9 : WORKDIR /app
+ ---> Using cache
+ ---> 7e75b3f1f02e
+Step 3/9 : ENV PATH /app/node_modules/.bin:$PATH
+ ---> Using cache
+ ---> 6400c9d969b0
+Step 4/9 : COPY package.json /app/package.json
+ ---> Using cache
+ ---> 89ec948dec2b
+Step 5/9 : RUN npm install
+ ---> Using cache
+ ---> 78d80df41380
+Step 6/9 : RUN npm install -g @angular/cli@8.3.17
+ ---> Using cache
+ ---> 0f72d934b259
+Step 7/9 : COPY . /app
+```
