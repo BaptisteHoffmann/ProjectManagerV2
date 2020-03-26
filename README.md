@@ -31,7 +31,7 @@ Outils de création, de validation et de gestion de projets
 
 **Avant de proceder :** veuillez bien installer les outils en pré requis
 
-## Utilisation des differents outils
+## Verification des differents outils
 
 
 ### Obtenir les fichiers sources pour le fonctionnement de l'application
@@ -70,6 +70,31 @@ docker version
 
 ```bash
 docker-compose version
+```
+
+### Les commandes utiles au niveau d'Angular :
+
+Lancer un projet en developpement :
+```bash
+ng serve --host 0.0.0.0 # Autorise tous les domaines
+```
+
+Génerer des composants (pages), services et autres :
+```bash
+ng generate --help
+```
+
+### Les commandes utiles au niveau de NodeJS :
+
+Lancer le serveur node :
+```bash
+node fichier-serveur.js
+```
+
+Redemarrer le serveur node à chaque changement dans un fichier du serveur node : \
+(En developpement)
+```bash
+nodemon fichier-serveur.js
 ```
 
 ## Utilisation de Docker-compose
@@ -159,8 +184,8 @@ Step 6/9 : RUN npm install -g @angular/cli@8.3.17
 Step 7/9 : COPY . /app
 ```
 
-Attention : certains messages en rouge au niveau des installations NPM peuvent apparaitre en rouge\
-Ce ne sont pas des erreurs, il faut attendre que le script continue dans ces cas précis.\
+Attention : certains messages en rouge au niveau des installations NPM peuvent apparaitre\
+Ce ne sont pas des erreurs, il faut attendre que le script continue dans ces cas précis. \
 
 On obtient donc trois containeurs avec la commande ***docker-compose ps*** :
 
@@ -170,4 +195,44 @@ On obtient donc trois containeurs avec la commande ***docker-compose ps*** :
 projectmanager_angular-app_1    docker-entrypoint.sh npm start   Up      0.0.0.0:4200->4200/tcp
 projectmanager_database-app_1   docker-entrypoint.sh mysqld      Up      0.0.0.0:3306->3306/tcp
 projectmanager_express-app_1    docker-entrypoint.sh bash  ...   Up      0.0.0.0:3000->3000/tcp
+```
+
+On a également les logs des containeurs (si besoin d'avoir des détails sur leurs fonctiennements) \
+On utilise la commande ***docker-compose logs*** :
+
+```bash
+database-app_1  | 2020-03-26 09:30:35+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 1:10.1.44+maria-1~bionic started.
+database-app_1  | 2020-03-26 09:30:37+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+database-app_1  | 2020-03-26 09:30:37+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 1:10.1.44+maria-1~bionic started.
+database-app_1  | 2020-03-26 09:30:37+00:00 [Note] [Entrypoint]: Initializing database files
+database-app_1  | 2020-03-26  9:30:38 140260928817152 [Note] /usr/sbin/mysqld (mysqld 10.1.44-MariaDB-1~bionic) starting as process 85 ...
+angular-app_1   | 
+angular-app_1   | > projetperso@0.0.0 start /app
+angular-app_1   | > ng serve --host 0.0.0.0
+angular-app_1   | 
+angular-app_1   | WARNING: This is a simple server for use in testing or debugging Angular applications
+angular-app_1   | locally. It hasn't been reviewed for security issues.
+angular-app_1   | 
+angular-app_1   | Binding this server to an open connection can result in compromising your application or
+angular-app_1   | computer. Using a different host than the one passed to the "--host" flag might result in
+angular-app_1   | websocket connection issues. You might need to use "--disableHostCheck" if that's the
+angular-app_1   | case.
+angular-app_1   | ℹ ｢wds｣: Project is running at http://0.0.0.0:4200/webpack-dev-server/
+angular-app_1   | ℹ ｢wds｣: webpack output is served from /
+angular-app_1   | ℹ ｢wds｣: 404s will fallback to //index.html
+angular-app_1   | 
+angular-app_1   | chunk {main} main.js, main.js.map (main) 273 kB [initial] [rendered]
+angular-app_1   | chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 269 kB [initial] [rendered]
+angular-app_1   | chunk {runtime} runtime.js, runtime.js.map (runtime) 6.15 kB [entry] [rendered]
+angular-app_1   | chunk {styles} styles.js, styles.js.map (styles) 9.68 kB [initial] [rendered]
+angular-app_1   | chunk {vendor} vendor.js, vendor.js.map (vendor) 5.04 MB [initial] [rendered]
+angular-app_1   | Date: 2020-03-26T09:31:04.664Z - Hash: c5417c8c3107bb016927 - Time: 20680ms
+angular-app_1   | ** Angular Live Development Server is listening on 0.0.0.0:4200, open your browser on http://localhost:4200/ **
+angular-app_1   | ℹ ｢wdm｣: Compiled successfully.
+express-app_1   | wait-for-it.sh: waiting for database-app:3306 without a timeout
+express-app_1   | wait-for-it.sh: database-app:3306 is available after 31 seconds
+express-app_1   | 
+express-app_1   | > projetperso@0.0.0 start /app
+express-app_1   | > node /app/servernd.js
+express-app_1   | 
 ```
