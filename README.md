@@ -56,7 +56,7 @@ cd NOM-DU-PROJET-ANGULAR
 ### Copier le contenu du dossier angular-app à la racine du projet Angular crée précédemment
 
 ```bash
-cp ~/ProjectManager/angular-app ~/ProjectManager/NOM-DU-PROJET-ANGULAR/
+cp -rf ~/ProjectManager/angular-app/* ~/ProjectManager/NOM-DU-PROJET-ANGULAR/
 ```
 
 
@@ -97,13 +97,17 @@ services:
       # Add the database service to the servernetwork.
       - applinetwork
 
-  express: #name of the second service
+  express-app: #name of the second service
     build: express-server # specify the directory of the Dockerfile
+    restart: always
     ports:
       - "3000:3000" #specify ports forewarding
     networks:
       # Add the express service to the servernetwork.
       - applinetwork
+    depends_on:
+      - "database-app"
+    command: bash -c "./wait-for-it.sh --timeout=0 database-app:3306 && npm start"
 
   angular: # name of the first service
     build: CHANGEZ LE NOM PAR LE NOM DU PROJET ANGULAR # specify the directory of the Dockerfile
@@ -112,4 +116,11 @@ services:
     networks:
       # Add the angular service to the servernetwork.
       - applinetwork
+```
+
+Une fois le fichier docker-compose.yml modifié et le projet Angular créé avec les fichiers sources ajoutés;
+On doit pouvoir exécuter la commande docker-compose décrit ci-dessous :
+
+```bash
+docker-compose -f docker-compose.yml up -d --build
 ```
