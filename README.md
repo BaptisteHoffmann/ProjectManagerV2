@@ -158,3 +158,16 @@ Step 6/9 : RUN npm install -g @angular/cli@8.3.17
  ---> 0f72d934b259
 Step 7/9 : COPY . /app
 ```
+
+Attention : certains messages en rouge au niveau des installations NPM peuvent apparaitre en rouge\
+Ce ne sont pas des erreurs, il faut attendre que le script continue dans ces cas précis.\
+
+On obtient donc trois containeurs avec la commande ***docker-compose ps*** :
+
+```bash
+            Name                           Command               State           Ports         
+-----------------------------------------------------------------------------------------------
+projectmanager_angular-app_1    docker-entrypoint.sh npm start   Up      0.0.0.0:4200->4200/tcp
+projectmanager_database-app_1   docker-entrypoint.sh mysqld      Up      0.0.0.0:3306->3306/tcp
+projectmanager_express-app_1    docker-entrypoint.sh bash  ...   Up      0.0.0.0:3000->3000/tcp
+```
