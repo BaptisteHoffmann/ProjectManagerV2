@@ -5,17 +5,7 @@ const jwt = require('jsonwebtoken');
 var sha512 = require('js-sha512').sha512;
 
 var Demande = function(Demande) {
-    // this.nom_client = Demande.usernameclient;
-    this.nom_demande = Demande.nomprojet;
-    this.nom_demandeur = Demande.demandeur;
-    this.description = Demande.description;
-    this.date_demande = Demande.datedemande;
-    this.code_NOP = Demande.codenop;
-    this.fonction = Demande.fonction;
-    this.reference_client = Demande.referenceclient;
-    this.validation_chiffrage = null;
-    this.reference_interne = Demande.referenceinterne;
-    this.fk_utilisateur_id = Demande.idutilisateur;
+    this.bdd_AjoutChamps = Demande.AjoutChamps;
 };
 
 var User = function(User) {
