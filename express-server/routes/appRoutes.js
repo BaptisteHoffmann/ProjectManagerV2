@@ -28,9 +28,15 @@ module.exports = function(app, path) {
 
     app.get('/demandes/:IdUtilisateur', authorize(), todoList.list_demandes_users);
 
+    // Page qui résume un projet en fonction de l'identifiant utilisateur et de la demande
+
     app.get('/resumeprojet/:IdUtilisateur/:IdDemande', authorize(), todoList.resumeprojet);
 
+    // Tableau du chiffrage pour le client sur la page de résumé de projet
+
     app.get('/chiffrageclient/:IdUtilisateur/:IdDemande', authorize(), todoList.chiffrageclient);
+
+    // Résumé des périmètres indiqués lors de la création d'un projet sur la page de résumé de projet
 
     app.get('/resumeperimetreclient/:IdUtilisateur/:IdDemande', authorize(), todoList.resumeperimetreclient);
 
@@ -42,27 +48,51 @@ module.exports = function(app, path) {
 
     app.post('/total', authorize(), todoList.post_valeurtotal);
 
+    // Commentaire posté par le client si il n'est pas satisfait du chiffrage appliqué par l'admin
+
     app.post('/commentairechiffrageclient', authorize(), todoList.post_acceptation);
+
+    // Formulaire de demande de projet
 
     app.post('/formulaireclient', authorize(), todoList.post_demandeclient);
 
+    // Application du chiffrage existant pour l'admin sur la page de chiffrage de projet
+
     app.post('/formulaireadmin/:IdDemande', authorize(Role.Admin), todoList.post_demandeadmin);
+
+    // Formulaire d'application du chiffrage d'un projet par l'admin
 
     app.get('/formulaireadmintab/:IdDemande', authorize(Role.Admin), todoList.get_demandeadmin);
 
+    // Formulaire de création d'un utilisateur
+
     app.post('/creationuser', authorize(Role.Admin), todoList.post_creationuser);
+
+    // Liste des utilisateurs présent sur l'application, disponible uniquement pour l'admin
 
     app.get('/listusers',  authorize(Role.Admin), todoList.get_userslist);
 
+    // Informations d'un utilisateur spécifique
+
     app.get('/userinfos/:IdUtilisateur', authorize(), todoList.get_userinfos);
+
+    // Mise à jour des informations d'un utilisateur
 
     app.post('/userinfos/update', authorize(), todoList.post_userinfos);
 
+    // Compteur des demandes de projet en fonction des utilisateurs
+
     app.get('/countdemandes',  authorize(Role.Admin), todoList.get_countdemandes);
+
+    // Authentification des utilisateurs
 
     app.post('/users/authenticate', todoList.userlogin);
 
+    // Suppression d'une ligne d'un chiffrage
+
     app.post('/deleteligneform', authorize(Role.Admin), todoList.delete_ligneadmin);
+
+    // Suppression d'un utilisateur
 
     app.post('/deleteuser', authorize(Role.Admin), todoList.delete_user);
 };
