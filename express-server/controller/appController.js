@@ -145,36 +145,7 @@ exports.list_demandes_users = function(req, res) {
   });
 };
 
-exports.list_etapes = function(req, res) {
-  var tab = {};
-  tab['data'] = [];
-  Demande.getEtapesFromDemande(req.params.IdUtilisateur, req.params.IdDemande, function(err, etapes) {
-
-
-    if (err)
-      res.send(err); // Renvoie l'erreur que la bdd a généré
-
-    tab['data'].push(etapes);
-    // res.json(etapes);
-  });
-  Demande.getResumeDemandeFromDemande(req.params.IdUtilisateur, req.params.IdDemande, function(err, resume) {
-    if (err) {
-      res.send(err); // Renvoie l'erreur que la bdd a généré
-    }
-
-    tab['data'].push(resume);
-    // res.json(tab['data']);
-  });
-  Demande.getPerimetresFromDemande(req.params.IdDemande, function(err, perimetres) {
-
-    if (err) {
-      res.send(err); // Renvoie l'erreur que la bdd a généré
-    }
-
-    tab['data'].push(perimetres);
-    res.json(tab['data']); // Renvoie le résultat si aucune erreur
-  });
-};
+// Page qui résume un projet pour l'admin en fonction de l'identifiant utilisateur et de la demande
 
 exports.resumeprojetadmin = function(req, res) {
   Demande.getDemandeAdmin(req.params.IdDemande, function(err, resume) {
@@ -191,6 +162,8 @@ exports.resumeprojetadmin = function(req, res) {
   });
 };
 
+// On sélectionne le droit de l'utilisateur qui a créé le projet au niveau de la page résumé de projet pour l'admin
+
 exports.droitutilisateurresume = function(req, res) {
   Demande.getDroitUtilisateur(req.params.IdDemande, function(err, droit) {
 
@@ -202,6 +175,8 @@ exports.droitutilisateurresume = function(req, res) {
     res.json(droit); // Renvoie le résultat si aucune erreur
   });
 }
+
+// Tableau du chiffrage pour l'admin sur la page de résumé de projet
 
 exports.chiffrageadmin = function(req, res) {
   Demande.getChiffrageAdmin(req.params.IdDemande, function(err, etapes) {
@@ -215,6 +190,8 @@ exports.chiffrageadmin = function(req, res) {
     res.json(etapes); // Renvoie le résultat si aucune erreur
   });
 }
+
+// Résumé des périmètres indiqués lors de la création d'un projet sur la page de résumé de projet
 
 exports.resumeperimetreadmin = function(req, res) {
   Demande.getPerimetresAdmin(req.params.IdDemande, function(err, perimetres) {
@@ -394,13 +371,6 @@ exports.resumeperimetreclient = function(req, res) {
 exports.post_demandeclient = function(req, res) {
   var new_demande = new Demande(req.body.formulaireForm);
 
-
-
-  // if(!new_demande.product || !new_product.status){
-  //   res.status(400).send({ error:true, message: 'Please provide all elements for a product' });
-  // }
-  // else{
-
   var perim = [];
   var perimuse = [];
 
@@ -411,17 +381,11 @@ exports.post_demandeclient = function(req, res) {
     }
   }
 
-  // var new_perimetre = new Perimetre(perimuse);
-
   //handles null error
   if(!new_demande.nom_demande
     || !new_demande.nom_demandeur
     || !new_demande.description
     || !new_demande.date_demande
-    // || !new_demande.code_NOP
-    // || !new_demande.fonction
-    // || !new_demande.reference_client
-    // || !new_demande.reference_interne
     || !new_demande.fk_utilisateur_id
   ){
     res.status(400).send({ message: 'Veuillez renseigner tous les champs saisis' });
@@ -489,14 +453,4 @@ exports.post_acceptation = function(req, res) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
   });
-}
-
-exports.verification_requetes = function(req, res) {
-  const currentUser = req.user;
-  const id = parseInt(req.params.IdUtilisateur);
-
-  // only allow current client to see his different requests
-  if (id !== currentUser.sub && currentUser.role == Role.User) {
-    return res.status(400).json({ message: 'Authorisation refusée' });
-  }
 }
