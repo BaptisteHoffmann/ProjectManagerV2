@@ -5,13 +5,23 @@ const jwt = require('jsonwebtoken');
 var sha512 = require('js-sha512').sha512;
 
 var Demande = function(Demande) {
-    this.bdd_AjoutChamps = Demande.AjoutChamps;
+    // this.nom_client = Demande.usernameclient;
+    this.nom_demande = Demande.nomprojet;
+    this.nom_demandeur = Demande.demandeur;
+    this.description = Demande.description;
+    this.date_demande = Demande.datedemande;
+    this.code_NOP = Demande.codenop;
+    this.fonction = Demande.fonction;
+    this.reference_client = Demande.referenceclient;
+    this.validation_chiffrage = null;
+    this.reference_interne = Demande.referenceinterne;
+    this.fk_utilisateur_id = Demande.idutilisateur;
 };
 
 var User = function(User) {
-    this.nom_utilisateur = User.login;
+    this.nom_utilisateur = User.nom;
     this.prenom_utilisateur = User.prenom;
-    this.login_utilisateur = User.nom;
+    this.login_utilisateur = User.login;
     this.mdp_utilisateur = User.mdp;
     this.droit_utilisateur = User.droit;
     this.nom_entreprise = User.entreprise;
@@ -171,11 +181,11 @@ Chiffrage.afficherNomGrade = function (result) {
       });
 };
 
-User.userlogin = function (nom_utilisateur, mdp_utilisateur, result) {
+User.userlogin = function (login_utilisateur, mdp_utilisateur, result) {
     // console.log(sha512(mdp_utilisateur));
     mdp_utilisateur = sha512(mdp_utilisateur);
-    console.log(nom_utilisateur + " " + mdp_utilisateur);
-    sql.query("SELECT id_utilisateur, nom_utilisateur, droit_utilisateur, nom_entreprise from Utilisateurs WHERE nom_utilisateur = ? AND mdp_utilisateur = ?", [nom_utilisateur, mdp_utilisateur], function (err, res) {
+    console.log(login_utilisateur + " " + mdp_utilisateur);
+    sql.query("SELECT id_utilisateur, login_utilisateur, droit_utilisateur, nom_entreprise from Utilisateurs WHERE login_utilisateur = ? AND mdp_utilisateur = ?", [login_utilisateur, mdp_utilisateur], function (err, res) {
             if(err) {
               console.log("error: ", err);
               result(null, err);
@@ -213,7 +223,7 @@ User.createUser = function (user, result) {
 };
 
 User.listUsers = function (result) {
-  sql.query("SELECT id_utilisateur, nom_utilisateur, nom_entreprise, droit_utilisateur FROM `Utilisateurs`",function (err, res) {
+  sql.query("SELECT id_utilisateur, nom_utilisateur, login_utilisateur, nom_entreprise, droit_utilisateur FROM `Utilisateurs`",function (err, res) {
           if(err) {
             console.log("error: ", err);
             result(null, err);
@@ -239,7 +249,7 @@ User.deleteUser = function (IdUser, result) {
 };
 
 User.countDemandes = function (result) {
-  sql.query("SELECT Utilisateurs.id_utilisateur, Utilisateurs.nom_utilisateur, Utilisateurs.nom_entreprise, Utilisateurs.droit_utilisateur, COUNT(Demandes.fk_utilisateur_id) AS nombre_demandes FROM `Utilisateurs` INNER JOIN Demandes ON Utilisateurs.id_utilisateur = Demandes.fk_utilisateur_id GROUP BY Demandes.fk_utilisateur_id",function (err, res) {
+  sql.query("SELECT Utilisateurs.id_utilisateur, Utilisateurs.nom_utilisateur, Utilisateurs.login_utilisateur,Utilisateurs.nom_entreprise, Utilisateurs.droit_utilisateur, COUNT(Demandes.fk_utilisateur_id) AS nombre_demandes FROM `Utilisateurs` INNER JOIN Demandes ON Utilisateurs.id_utilisateur = Demandes.fk_utilisateur_id GROUP BY Demandes.fk_utilisateur_id",function (err, res) {
           if(err) {
             console.log("error: ", err);
             result(null, err);
@@ -268,7 +278,7 @@ User.selectUser = function (IdUser, result) {
 };
 
 User.updateUserInfos = function (nom_entreprise, nom, prenom, password, droit_utilisateur, iduser, result) {
-  sql.query("UPDATE Utilisateurs SET nom_entreprise = ?, login_utilisateur = ?, prenom_utilisateur = ?, mdp_utilisateur = ?, droit_utilisateur = ? WHERE `id_utilisateur` = ?", [nom_entreprise, nom, prenom, password, droit_utilisateur, iduser], function (err, res) {
+  sql.query("UPDATE Utilisateurs SET nom_entreprise = ?, nom_utilisateur = ?, prenom_utilisateur = ?, mdp_utilisateur = ?, droit_utilisateur = ? WHERE `id_utilisateur` = ?", [nom_entreprise, nom, prenom, password, droit_utilisateur, iduser], function (err, res) {
           if(err) {
             console.log("error: ", err);
             result(null, err);
@@ -341,7 +351,7 @@ Demande.getChiffrageAdmin = function (IdDemande, result) {
 
 Demande.getDemandeAdmin = function (IdDemande, result) { // départager la partie perim et demande
   console.log(IdDemande);
-  sql.query("SELECT Demandes.nom_demande, Demandes.nom_demandeur, Demandes.date_demande,Demandes.date_chiffrage,Demandes.date_demarrage,Demandes.date_livraison,Demandes.description, Demandes.code_nop, Demandes.fonction, Demandes.reference_client, Demandes.reference_interne, Demandes.fk_etat_id, Demandes.Total, Demandes.validation_chiffrage, Demandes.remarque_validation, Etats.nom_etat,Utilisateurs.nom_utilisateur FROM Demandes LEFT JOIN Etats on fk_etat_id=Etats.id_etat RIGHT JOIN Utilisateurs on fk_utilisateur_id=Utilisateurs.id_utilisateur WHERE Demandes.id_demande= ?", IdDemande,function (err, res) {
+  sql.query("SELECT Demandes.nom_demande, Demandes.nom_demandeur, Demandes.date_demande,Demandes.date_chiffrage,Demandes.date_demarrage,Demandes.date_livraison,Demandes.description, Demandes.code_nop, Demandes.fonction, Demandes.reference_client, Demandes.reference_interne, Demandes.fk_etat_id, Demandes.Total, Demandes.validation_chiffrage, Demandes.remarque_validation, Etats.nom_etat,Utilisateurs.nom_utilisateur, Utilisateurs.login_utilisateur FROM Demandes LEFT JOIN Etats on fk_etat_id=Etats.id_etat RIGHT JOIN Utilisateurs on fk_utilisateur_id=Utilisateurs.id_utilisateur WHERE Demandes.id_demande= ?", IdDemande,function (err, res) {
 
           if(err) {
             // console.log("error: ", err);
@@ -375,7 +385,7 @@ Demande.getDroitUtilisateur = function (IdDemande, result) { // départager la p
 };
 
 Demande.getDemandeClient = function (IdDemande, IdUtilisateur, result) { // départager la partie perim et demande
-  sql.query("SELECT Demandes.nom_demande, Demandes.nom_demandeur, Demandes.date_demande,Demandes.date_chiffrage,Demandes.date_demarrage,Demandes.date_livraison,Demandes.description, Demandes.code_nop, Demandes.fonction, Demandes.reference_client, Demandes.reference_interne, Demandes.fk_etat_id, Demandes.Total, Demandes.validation_chiffrage, Demandes.remarque_validation, Etats.nom_etat,Utilisateurs.nom_utilisateur FROM Demandes LEFT JOIN Etats on fk_etat_id=Etats.id_etat RIGHT JOIN Utilisateurs on fk_utilisateur_id=Utilisateurs.id_utilisateur WHERE Demandes.id_demande= ? AND Utilisateurs.id_utilisateur = ?", [IdDemande, IdUtilisateur], function (err, res) {
+  sql.query("SELECT Demandes.nom_demande, Demandes.nom_demandeur, Demandes.date_demande,Demandes.date_chiffrage,Demandes.date_demarrage,Demandes.date_livraison,Demandes.description, Demandes.code_nop, Demandes.fonction, Demandes.reference_client, Demandes.reference_interne, Demandes.fk_etat_id, Demandes.Total, Demandes.validation_chiffrage, Demandes.remarque_validation, Etats.nom_etat,Utilisateurs.nom_utilisateur, Utilisateurs.login_utilisateur FROM Demandes LEFT JOIN Etats on fk_etat_id=Etats.id_etat RIGHT JOIN Utilisateurs on fk_utilisateur_id=Utilisateurs.id_utilisateur WHERE Demandes.id_demande= ? AND Utilisateurs.id_utilisateur = ?", [IdDemande, IdUtilisateur], function (err, res) {
 
           if(err) {
             // console.log("error: ", err);
