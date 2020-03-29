@@ -7,18 +7,20 @@ var User = require('../model/appModel.js').User;
 var sha512 = require('js-sha512').sha512;
 var Role = require('../model/services/role');
 
+// Suppression d'une ligne d'un chiffrage
+
 exports.delete_ligneadmin = function(req, res) {
   Chiffrage.deleteLigneForm(req.body.idLigne, function(err, chiffrage) {
 
-    console.log('controller')
+
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
   });
 
   Chiffrage.afficherChiffrage2(req.body.idDemande, function(err, chiffrage) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
       res.json(chiffrage);
@@ -28,13 +30,13 @@ exports.delete_ligneadmin = function(req, res) {
 exports.delete_user = function(req, res) {
   User.deleteUser(req.body.idUser, function(err, chiffrage) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
   });
 
   User.listUsers(function(err, user) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
       for (let index = 0; index < user.length; index++) {
@@ -53,17 +55,16 @@ exports.delete_user = function(req, res) {
 
 exports.post_demandeadmin = function(req, res) {
   var new_chiffrage = new Chiffrage(req.params.IdDemande, req.body.formulaireAdmin);
-  console.log(req.body);
-  console.log(req.params.IdDemande);
+
 
   Chiffrage.createChiffrage(new_chiffrage, function(err, chiffrage) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
       Chiffrage.afficherChiffrage(chiffrage, function(err, chiffrage2) {
         if (err) {
-          res.send(err);
+          res.send(err); // Renvoie l'erreur que la bdd a généré
         }
         else {
           res.json(chiffrage2);
@@ -76,7 +77,7 @@ exports.post_demandeadmin = function(req, res) {
 exports.get_demandeadmin = function(req, res) {
   Chiffrage.afficherChiffrage2(req.params.IdDemande, function(err, chiffrage) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
       res.json(chiffrage);
@@ -85,12 +86,10 @@ exports.get_demandeadmin = function(req, res) {
 };
 
 exports.userlogin = function(req, res) {
-  console.log(req.body);
-  // console.log(req.body.loginForm.username);
-  // console.log(req.body.loginForm.password);
+
   User.userlogin(req.body.username, req.body.password, function(err, user) {
 
-    // console.log('controller')
+
 
     if (err) {
       res.status(400).json({ message: 'Username or password is incorrect' });
@@ -99,7 +98,6 @@ exports.userlogin = function(req, res) {
       res.status(400).json({ message: 'Username or password is incorrect' });
     }
     else {
-      console.log('res', user);
       res.json(user);
     }
   });
@@ -108,10 +106,9 @@ exports.userlogin = function(req, res) {
 exports.list_demandes = function(req, res) {
   Demande.getDemandes(function(err, demandes) {
 
-    console.log('controller')
     if (err)
-      res.send(err);
-      console.log('res', demandes);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
+
     res.json(demandes);
   });
 };
@@ -125,11 +122,11 @@ exports.list_demandes_users = function(req, res) {
   }
   Demande.getDemandeUser(req.params.IdUtilisateur, function(err, demande) {
 
-    console.log(req.params.IdUtilisateur);
+
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', demande);
+
     res.json(demande);
   });
 };
@@ -139,27 +136,27 @@ exports.list_etapes = function(req, res) {
   tab['data'] = [];
   Demande.getEtapesFromDemande(req.params.IdUtilisateur, req.params.IdDemande, function(err, etapes) {
 
-    console.log('controller')
+
     if (err)
-      res.send(err);
-    console.log('res', etapes);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
+
     tab['data'].push(etapes);
     // res.json(etapes);
   });
   Demande.getResumeDemandeFromDemande(req.params.IdUtilisateur, req.params.IdDemande, function(err, resume) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', resume);
+
     tab['data'].push(resume);
     // res.json(tab['data']);
   });
   Demande.getPerimetresFromDemande(req.params.IdDemande, function(err, perimetres) {
-    console.log('controller')
+
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', perimetres);
+
     tab['data'].push(perimetres);
     res.json(tab['data']);
   });
@@ -168,13 +165,13 @@ exports.list_etapes = function(req, res) {
 exports.resumeprojetadmin = function(req, res) {
   Demande.getDemandeAdmin(req.params.IdDemande, function(err, resume) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     } else if(!resume) {
-      console.log(resume);
+
       res.status(400).json({ message: 'ERROR' });
     }
     else {
-      console.log('res', resume);
+
       res.json(resume);
     }
   });
@@ -183,11 +180,11 @@ exports.resumeprojetadmin = function(req, res) {
 exports.droitutilisateurresume = function(req, res) {
   Demande.getDroitUtilisateur(req.params.IdDemande, function(err, droit) {
 
-    console.log('controller')
+
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', droit);
+
     res.json(droit);
   });
 }
@@ -195,11 +192,11 @@ exports.droitutilisateurresume = function(req, res) {
 exports.chiffrageadmin = function(req, res) {
   Demande.getChiffrageAdmin(req.params.IdDemande, function(err, etapes) {
 
-    console.log('controller')
+
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', etapes);
+
     // tab['data'].push(etapes);
     res.json(etapes);
   });
@@ -207,11 +204,11 @@ exports.chiffrageadmin = function(req, res) {
 
 exports.resumeperimetreadmin = function(req, res) {
   Demande.getPerimetresAdmin(req.params.IdDemande, function(err, perimetres) {
-    console.log('controller')
+
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', perimetres);
+
     res.json(perimetres);
   });
 }
@@ -224,11 +221,10 @@ exports.post_creationuser = function(req, res) {
     req.body.user.droit = Role.User;
   }
   var new_user = new User(req.body.user);
-  console.log('creation utilisateur : ');
-  console.log(new_user);
+
   User.createUser(new_user, function(err, user) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
       res.json(user);
@@ -239,10 +235,9 @@ exports.post_creationuser = function(req, res) {
 exports.get_userslist = function(req, res) {
   User.listUsers(function(err, user) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
-      console.log('liste utilisateurs : ');
       for (let index = 0; index < user.length; index++) {
         const element = user[index].droit_utilisateur;
         if(element == Role.Admin) {
@@ -267,13 +262,12 @@ exports.get_userinfos = function(req, res) {
   }
   User.selectUser(req.params.IdUtilisateur, function(err, user) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     } else if(!user) {
-      console.log(user);
+
       res.status(400).json({ message: 'ERROR' });
     }
     else {
-      console.log('info user : ');
       for (let index = 0; index < user.length; index++) {
         const element = user[index].droit_utilisateur;
         if(element == Role.Admin) {
@@ -310,7 +304,7 @@ exports.post_userinfos = function(req, res) {
 
   User.updateUserInfos(nom_entreprise, nom, prenom, password, droit_utilisateur, iduser, function(err, user) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
       res.json(user);
@@ -321,7 +315,7 @@ exports.post_userinfos = function(req, res) {
 exports.get_countdemandes = function(req, res) {
   User.countDemandes(function(err, user) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
       res.json(user);
@@ -331,19 +325,14 @@ exports.get_countdemandes = function(req, res) {
 
 exports.resumeprojet = function(req, res) {
   const currentUser = req.user;
-  // console.log('demandetest');
-  // console.log(req.params.IdDemande);
-  // console.log(req.params.IdUtilisateur);
+
   Demande.getDemandeClient(req.params.IdDemande, req.params.IdUtilisateur, function(err, resume) {
     if (err) {
-      console.log(err);
       res.status(400).json({ message: err });
     } else if(!resume) {
-      console.log(resume);
       res.status(400).json({ message: 'ERROR' });
     }
     else {
-    // console.log('res', resume);
       res.json(resume);
     }
   });
@@ -352,11 +341,10 @@ exports.resumeprojet = function(req, res) {
 exports.chiffrageclient = function(req, res) {
   Demande.getChiffrageAdmin(req.params.IdDemande, function(err, etapes) {
 
-    console.log('controller')
+
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', etapes);
     // tab['data'].push(etapes);
     res.json(etapes);
   });
@@ -364,11 +352,9 @@ exports.chiffrageclient = function(req, res) {
 
 exports.resumeperimetreclient = function(req, res) {
   Demande.getPerimetresAdmin(req.params.IdDemande, function(err, perimetres) {
-    console.log('controller')
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', perimetres);
     res.json(perimetres);
   });
 }
@@ -376,7 +362,7 @@ exports.resumeperimetreclient = function(req, res) {
 exports.post_demandeclient = function(req, res) {
   var new_demande = new Demande(req.body.formulaireForm);
 
-  console.log(new_demande);
+
 
   // if(!new_demande.product || !new_product.status){
   //   res.status(400).send({ error:true, message: 'Please provide all elements for a product' });
@@ -385,9 +371,6 @@ exports.post_demandeclient = function(req, res) {
 
   var perim = [];
   var perimuse = [];
-
-  console.log('les params : ');
-  console.log(req.body.perimetreForm);
 
   perim = Object.values(req.body.perimetreForm);
   for (let index = 0; index < perim.length; index++) {
@@ -399,7 +382,6 @@ exports.post_demandeclient = function(req, res) {
   // var new_perimetre = new Perimetre(perimuse);
 
   //handles null error
-  // console.log(req.body)
   if(!new_demande.nom_demande
     || !new_demande.nom_demandeur
     || !new_demande.description
@@ -415,7 +397,7 @@ exports.post_demandeclient = function(req, res) {
     Demande.createDemande(new_demande, perimuse, function(err, demande) {
 
       if (err) {
-        res.send(err);
+        res.send(err); // Renvoie l'erreur que la bdd a généré
       }
       // Demande.createPerimetre(demande);
       res.json(demande);
@@ -424,13 +406,12 @@ exports.post_demandeclient = function(req, res) {
 }
 
 exports.post_changementetat = function(req, res) {
-  console.log(req.body.IdDemande);
-  console.log(req.body.IdEtat);
+
   Demande.changementEtat(req.body.IdDemande, req.body.IdEtat, function(err, etat) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', etat);
+
   });
 
   switch (req.body.IdEtat) {
@@ -438,9 +419,9 @@ exports.post_changementetat = function(req, res) {
       var datechiffrage = new Date();
       Demande.dateChiffrage(req.body.IdDemande, datechiffrage, function(err, date) {
         if (err) {
-          res.send(err);
+          res.send(err); // Renvoie l'erreur que la bdd a généré
         }
-        console.log('res', date);
+
         res.json(date);
       });
       break;
@@ -451,13 +432,12 @@ exports.post_changementetat = function(req, res) {
 }
 
 exports.post_valeurtotal = function(req, res) {
-  console.log('le calcul');
-  console.log(req.body.calcul);
+
   Demande.valeurtotal(req.body.IdDemande, req.body.calcul, function(err, etat) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', etat);
+
   });
 }
 
@@ -468,9 +448,8 @@ exports.post_acceptation = function(req, res) {
   const validationChiffrage = req.body.repChiffrageClient.validationChiffrage;
   Demande.acceptation(idDemande, commentaire, etatprojet, validationChiffrage,function(err, etat) {
     if (err) {
-      res.send(err);
+      res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    console.log('res', etat);
   });
 }
 
