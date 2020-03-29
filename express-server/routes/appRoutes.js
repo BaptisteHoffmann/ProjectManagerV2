@@ -10,11 +10,19 @@ module.exports = function(app, path) {
 
     app.get('/demandesadmin', authorize(Role.Admin), todoList.list_demandes);
 
+    // Page qui résume un projet pour l'admin en fonction de l'identifiant utilisateur et de la demande
+
     app.get('/resumeprojetadmin/:IdUtilisateur/:IdDemande', authorize(Role.Admin), todoList.resumeprojetadmin);
+
+    // Tableau du chiffrage pour l'admin sur la page de résumé de projet
 
     app.get('/chiffrageadmin/:IdUtilisateur/:IdDemande', authorize(Role.Admin), todoList.chiffrageadmin);
 
+    // Résumé des périmètres indiqués lors de la création d'un projet sur la page de résumé de projet
+
     app.get('/resumeperimetreadmin/:IdUtilisateur/:IdDemande', authorize(Role.Admin), todoList.resumeperimetreadmin);
+
+    // On sélectionne le droit de l'utilisateur qui a créé le projet au niveau de la page résumé de projet pour l'admin
 
     app.get('/droitutilisateuradmin/:IdUtilisateur/:IdDemande', authorize(Role.Admin), todoList.droitutilisateurresume);
 
