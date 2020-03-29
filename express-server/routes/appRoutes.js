@@ -4,10 +4,6 @@ module.exports = function(app, path) {
   const authorize = require('../model/services/authorize.js');
   const Role = require('../model/services/role.js');
 
-
-    // route utilisée pour authentifier les utilisateurs à leur première connexion
-    app.post('/authentification', todoList.userlogin);
-
     // Contenu au niveau de l'administrateur
 
     // Page d'état des projets contenant les projets de tous les utilisateurs
