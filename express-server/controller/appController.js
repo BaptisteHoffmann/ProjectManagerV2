@@ -23,10 +23,13 @@ exports.delete_ligneadmin = function(req, res) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
-      res.json(chiffrage);
+      res.json(chiffrage); // Renvoie le résultat si aucune erreur
     }
   });
 };
+
+// Suppression d'un utilisateur
+
 exports.delete_user = function(req, res) {
   User.deleteUser(req.body.idUser, function(err, chiffrage) {
     if (err) {
@@ -48,10 +51,12 @@ exports.delete_user = function(req, res) {
           user[index].droit_utilisateur = 'Client';
         }
       }
-      res.json(user);
+      res.json(user); // Renvoie le résultat si aucune erreur
     }
   });
 };
+
+// Application du chiffrage existant pour l'admin sur la page de chiffrage de projet
 
 exports.post_demandeadmin = function(req, res) {
   var new_chiffrage = new Chiffrage(req.params.IdDemande, req.body.formulaireAdmin);
@@ -67,12 +72,14 @@ exports.post_demandeadmin = function(req, res) {
           res.send(err); // Renvoie l'erreur que la bdd a généré
         }
         else {
-          res.json(chiffrage2);
+          res.json(chiffrage2); // Renvoie le résultat si aucune erreur
         }
       });
     }
   });
 };
+
+// Formulaire d'application du chiffrage d'un projet par l'admin
 
 exports.get_demandeadmin = function(req, res) {
   Chiffrage.afficherChiffrage2(req.params.IdDemande, function(err, chiffrage) {
@@ -80,10 +87,12 @@ exports.get_demandeadmin = function(req, res) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
-      res.json(chiffrage);
+      res.json(chiffrage); // Renvoie le résultat si aucune erreur
     }
   });
 };
+
+// Authentification des utilisateurs
 
 exports.userlogin = function(req, res) {
 
@@ -98,10 +107,13 @@ exports.userlogin = function(req, res) {
       res.status(400).json({ message: 'Username or password is incorrect' });
     }
     else {
-      res.json(user);
+      res.json(user); // Renvoie le résultat si aucune erreur
     }
   });
 };
+
+
+// Page d'état des projets contenant les projets de tous les utilisateurs
 
 exports.list_demandes = function(req, res) {
   Demande.getDemandes(function(err, demandes) {
@@ -109,9 +121,11 @@ exports.list_demandes = function(req, res) {
     if (err)
       res.send(err); // Renvoie l'erreur que la bdd a généré
 
-    res.json(demandes);
+    res.json(demandes); // Renvoie le résultat si aucune erreur
   });
 };
+
+// Page d'état des projets pour les clients à leurs arrivés sur la page d'accueil
 
 exports.list_demandes_users = function(req, res) {
   const currentUser = req.user;
@@ -127,7 +141,7 @@ exports.list_demandes_users = function(req, res) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
 
-    res.json(demande);
+    res.json(demande); // Renvoie le résultat si aucune erreur
   });
 };
 
@@ -158,7 +172,7 @@ exports.list_etapes = function(req, res) {
     }
 
     tab['data'].push(perimetres);
-    res.json(tab['data']);
+    res.json(tab['data']); // Renvoie le résultat si aucune erreur
   });
 };
 
@@ -172,7 +186,7 @@ exports.resumeprojetadmin = function(req, res) {
     }
     else {
 
-      res.json(resume);
+      res.json(resume); // Renvoie le résultat si aucune erreur
     }
   });
 };
@@ -185,7 +199,7 @@ exports.droitutilisateurresume = function(req, res) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
 
-    res.json(droit);
+    res.json(droit); // Renvoie le résultat si aucune erreur
   });
 }
 
@@ -198,7 +212,7 @@ exports.chiffrageadmin = function(req, res) {
     }
 
     // tab['data'].push(etapes);
-    res.json(etapes);
+    res.json(etapes); // Renvoie le résultat si aucune erreur
   });
 }
 
@@ -209,9 +223,11 @@ exports.resumeperimetreadmin = function(req, res) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
 
-    res.json(perimetres);
+    res.json(perimetres); // Renvoie le résultat si aucune erreur
   });
 }
+
+// Formulaire de création d'un utilisateur
 
 exports.post_creationuser = function(req, res) {
   req.body.user.mdp = sha512(req.body.user.mdp);
@@ -227,10 +243,12 @@ exports.post_creationuser = function(req, res) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
-      res.json(user);
+      res.json(user); // Renvoie le résultat si aucune erreur
     }
   });
 };
+
+// Liste des utilisateurs présent sur l'application, disponible uniquement pour l'admin
 
 exports.get_userslist = function(req, res) {
   User.listUsers(function(err, user) {
@@ -247,10 +265,12 @@ exports.get_userslist = function(req, res) {
           user[index].droit_utilisateur = 'Client';
         }
       }
-      res.json(user);
+      res.json(user); // Renvoie le résultat si aucune erreur
     }
   });
 };
+
+// Informations d'un utilisateur spécifique
 
 exports.get_userinfos = function(req, res) {
   const currentUser = req.user;
@@ -277,10 +297,12 @@ exports.get_userinfos = function(req, res) {
           user[index].droit_utilisateur = 'Client';
         }
       }
-      res.json(user);
+      res.json(user); // Renvoie le résultat si aucune erreur
     }
   });
 };
+
+// Mise à jour des informations d'un utilisateur
 
 exports.post_userinfos = function(req, res) {
   const currentUser = req.user;
@@ -307,10 +329,12 @@ exports.post_userinfos = function(req, res) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
-      res.json(user);
+      res.json(user); // Renvoie le résultat si aucune erreur
     }
   });
 };
+
+// Compteur des demandes de projet en fonction des utilisateurs
 
 exports.get_countdemandes = function(req, res) {
   User.countDemandes(function(err, user) {
@@ -318,10 +342,12 @@ exports.get_countdemandes = function(req, res) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
-      res.json(user);
+      res.json(user); // Renvoie le résultat si aucune erreur
     }
   });
 };
+
+// Page qui résume un projet en fonction de l'identifiant utilisateur et de la demande
 
 exports.resumeprojet = function(req, res) {
   const currentUser = req.user;
@@ -333,10 +359,12 @@ exports.resumeprojet = function(req, res) {
       res.status(400).json({ message: 'ERROR' });
     }
     else {
-      res.json(resume);
+      res.json(resume); // Renvoie le résultat si aucune erreur
     }
   });
 };
+
+// Tableau du chiffrage pour le client sur la page de résumé de projet
 
 exports.chiffrageclient = function(req, res) {
   Demande.getChiffrageAdmin(req.params.IdDemande, function(err, etapes) {
@@ -346,18 +374,22 @@ exports.chiffrageclient = function(req, res) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     // tab['data'].push(etapes);
-    res.json(etapes);
+    res.json(etapes); // Renvoie le résultat si aucune erreur
   });
 }
+
+// Résumé des périmètres indiqués lors de la création d'un projet sur la page de résumé de projet
 
 exports.resumeperimetreclient = function(req, res) {
   Demande.getPerimetresAdmin(req.params.IdDemande, function(err, perimetres) {
     if (err) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-    res.json(perimetres);
+    res.json(perimetres); // Renvoie le résultat si aucune erreur
   });
 }
+
+// Formulaire de demande de projet
 
 exports.post_demandeclient = function(req, res) {
   var new_demande = new Demande(req.body.formulaireForm);
@@ -400,10 +432,12 @@ exports.post_demandeclient = function(req, res) {
         res.send(err); // Renvoie l'erreur que la bdd a généré
       }
       // Demande.createPerimetre(demande);
-      res.json(demande);
+      res.json(demande); // Renvoie le résultat si aucune erreur
     });
   }
 }
+
+// Changement d'état d'un projet si le projet a été chiffré par l'administrateur
 
 exports.post_changementetat = function(req, res) {
 
@@ -422,7 +456,7 @@ exports.post_changementetat = function(req, res) {
           res.send(err); // Renvoie l'erreur que la bdd a généré
         }
 
-        res.json(date);
+        res.json(date); // Renvoie le résultat si aucune erreur
       });
       break;
 
@@ -430,6 +464,8 @@ exports.post_changementetat = function(req, res) {
       break;
   }
 }
+
+// Obtention du coût total d'un projet
 
 exports.post_valeurtotal = function(req, res) {
 
@@ -440,6 +476,8 @@ exports.post_valeurtotal = function(req, res) {
 
   });
 }
+
+// Commentaire posté par le client si il n'est pas satisfait du chiffrage appliqué par l'admin
 
 exports.post_acceptation = function(req, res) {
   const idDemande = req.body.id;
