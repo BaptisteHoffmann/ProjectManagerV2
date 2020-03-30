@@ -409,7 +409,7 @@ exports.post_changementetat = function(req, res) {
     if (err) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-
+    res.json(etat); // Renvoie le résultat si aucune erreur
   });
 
   switch (req.body.IdEtat) {
@@ -419,8 +419,6 @@ exports.post_changementetat = function(req, res) {
         if (err) {
           res.send(err); // Renvoie l'erreur que la bdd a généré
         }
-
-        res.json(date); // Renvoie le résultat si aucune erreur
       });
       break;
 
@@ -433,11 +431,11 @@ exports.post_changementetat = function(req, res) {
 
 exports.post_valeurtotal = function(req, res) {
 
-  Demande.valeurtotal(req.body.IdDemande, req.body.calcul, function(err, etat) {
+  Demande.valeurtotal(req.body.IdDemande, req.body.calcul, function(err, valeur) {
     if (err) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
-
+    res.json(valeur);
   });
 }
 
@@ -452,5 +450,6 @@ exports.post_acceptation = function(req, res) {
     if (err) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
+    res.json(etat);
   });
 }
