@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 31 Mars 2020 à 15:14
+-- Généré le :  Mar 31 Mars 2020 à 16:28
 -- Version du serveur :  5.5.64-MariaDB
 -- Version de PHP :  5.4.16
 
@@ -48,8 +48,8 @@ INSERT INTO `Avancements` (`id_avancement`, `nom_avancement`) VALUES
 
 CREATE TABLE IF NOT EXISTS `Demandes` (
   `id_demande` int(11) NOT NULL,
-  `nom_demande` varchar(32) NOT NULL,
-  `nom_demandeur` varchar(32) NOT NULL,
+  `nom_demande` varchar(250) NOT NULL,
+  `nom_demandeur` varchar(250) NOT NULL,
   `description` text NOT NULL,
   `date_demande` date NOT NULL,
   `date_chiffrage` date DEFAULT NULL,
@@ -64,14 +64,15 @@ CREATE TABLE IF NOT EXISTS `Demandes` (
   `Total` double DEFAULT NULL,
   `fk_utilisateur_id` int(11) NOT NULL,
   `fk_etat_id` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `Demandes`
 --
 
 INSERT INTO `Demandes` (`id_demande`, `nom_demande`, `nom_demandeur`, `description`, `date_demande`, `date_chiffrage`, `date_demarrage`, `date_livraison`, `code_nop`, `fonction`, `reference_client`, `validation_chiffrage`, `remarque_validation`, `reference_interne`, `Total`, `fk_utilisateur_id`, `fk_etat_id`) VALUES
-(34, 'GT DATA - MIGRATION VERS LYON', 'Stéphane JUBEAU', 'construction de l''architecture d''hébergement de l''application Abus de Marché de Reuters :\n\napplication 3-Tiers : AS, BDD, ETL\n3 environnements : Dev, Homol et Production\n\n- AS : 4 VM RHEL + Oracle JDK\n- ETL : 3 VM RHEL + Oracle JRE\n- BDD : 2 LPAR avec BDD Oracle\n- publication application Citrix\n\nCriticité Application : a définir suite retrait de la redondance\nPCA/PRA : à definir suite retrait de la redondance\n5 utilisateurs\nenviron 4 To de stockage', '2020-02-29', '2020-03-31', NULL, NULL, 'A DEFINIR', 'CDP', 'F45', 'Chiffrage accepté', '', 'X24', 670, 2, 3);
+(85, 'GT DATA - chiffrage accepté avec réserve', 'Stéphane JUBEAU', 'construction de l''architecture d''hébergement de l''application Abus de Marché de Reuters :\r\n\r\napplication 3-Tiers : AS, BDD, ETL\r\n3 environnements : Dev, Homol et Production\r\n\r\n- AS : 4 VM RHEL + Oracle JDK\r\n- ETL : 3 VM RHEL + Oracle JRE\r\n- BDD : 2 LPAR avec BDD Oracle\r\n- publication application Citrix\r\n\r\nCriticité Application : a définir suite retrait de la redondance\r\nPCA/PRA : à definir suite retrait de la redondance\r\n5 utilisateurs\r\nenviron 4 To de stockage', '2020-02-29', '2020-03-31', NULL, NULL, 'A DEFINIR', 'CDP', 'F45', 'Chiffrage accepté', '', 'X24', 670, 2, 3),
+(86, 'GT DATA - chiffrage refusé', 'Stéphane JUBEAU', 'construction de l''architecture d''hébergement de l''application Abus de Marché de Reuters :\r\n\r\napplication 3-Tiers : AS, BDD, ETL\r\n3 environnements : Dev, Homol et Production\r\n\r\n- AS : 4 VM RHEL + Oracle JDK\r\n- ETL : 3 VM RHEL + Oracle JRE\r\n- BDD : 2 LPAR avec BDD Oracle\r\n- publication application Citrix\r\n\r\nCriticité Application : a définir suite retrait de la redondance\r\nPCA/PRA : à definir suite retrait de la redondance\r\n5 utilisateurs\r\nenviron 4 To de stockage', '2020-02-29', '2020-03-31', NULL, NULL, 'A DEFINIR', 'CDP', 'F45', 'Chiffrage accepté', '', 'X24', 670, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -83,19 +84,6 @@ CREATE TABLE IF NOT EXISTS `Demandes_Perimetres` (
   `fk_demande_id` int(11) DEFAULT NULL,
   `fk_perimetre_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Contenu de la table `Demandes_Perimetres`
---
-
-INSERT INTO `Demandes_Perimetres` (`fk_demande_id`, `fk_perimetre_id`) VALUES
-(34, 1),
-(34, 2),
-(34, 3),
-(34, 4),
-(34, 5),
-(34, 6),
-(34, 8);
 
 -- --------------------------------------------------------
 
@@ -139,17 +127,21 @@ CREATE TABLE IF NOT EXISTS `Ligne_Chiffrages` (
   `valeur_total` double NOT NULL,
   `remarque` text,
   `fk_avancement_id` int(11) NOT NULL DEFAULT '2'
-) ENGINE=InnoDB AUTO_INCREMENT=795 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=803 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `Ligne_Chiffrages`
 --
 
 INSERT INTO `Ligne_Chiffrages` (`id_ligne`, `fk_demande_id`, `nom_etape`, `nom_sous_etape`, `nom_acteur`, `nom_grade`, `valeur_charge`, `valeur_tjm`, `valeur_total`, `remarque`, `fk_avancement_id`) VALUES
-(555, 34, 'PRE REQUIS', 'NOMMAGE SRV+BDD', 'COVEA FI', 'B2', 1, 20, 20, NULL, 2),
-(558, 34, 'PRE REQUIS', 'CONFIG VM', 'COVEA FI', 'B2', 1, 50, 50, NULL, 2),
-(560, 34, 'PRE REQUIS', 'LICENCE OS ET BDD', 'COVEA FI', 'B2', 1, 200, 200, NULL, 2),
-(615, 34, 'PREPARATION', 'Etude, chiffrage, validation des pré requis', 'DBA', 'B2', 2, 200, 400, NULL, 2);
+(795, 85, 'PRE REQUIS', 'NOMMAGE SRV+BDD', 'COVEA FI', 'B2', 1, 20, 20, NULL, 2),
+(796, 85, 'PRE REQUIS', 'CONFIG VM', 'COVEA FI', 'B2', 1, 50, 50, NULL, 2),
+(797, 85, 'PRE REQUIS', 'LICENCE OS ET BDD', 'COVEA FI', 'B2', 1, 200, 200, NULL, 2),
+(798, 85, 'PREPARATION', 'Etude, chiffrage, validation des pré requis', 'DBA', 'B2', 2, 200, 400, NULL, 2),
+(799, 86, 'PRE REQUIS', 'NOMMAGE SRV+BDD', 'COVEA FI', 'B2', 1, 20, 20, NULL, 2),
+(800, 86, 'PRE REQUIS', 'CONFIG VM', 'COVEA FI', 'B2', 1, 50, 50, NULL, 2),
+(801, 86, 'PRE REQUIS', 'LICENCE OS ET BDD', 'COVEA FI', 'B2', 1, 200, 200, NULL, 2),
+(802, 86, 'PREPARATION', 'Etude, chiffrage, validation des pré requis', 'DBA', 'B2', 2, 200, 400, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -191,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `Utilisateurs` (
   `nom_entreprise` varchar(32) NOT NULL,
   `mdp_utilisateur` varchar(128) NOT NULL,
   `droit_utilisateur` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `Utilisateurs`
@@ -199,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `Utilisateurs` (
 
 INSERT INTO `Utilisateurs` (`id_utilisateur`, `nom_utilisateur`, `prenom_utilisateur`, `login_utilisateur`, `nom_entreprise`, `mdp_utilisateur`, `droit_utilisateur`) VALUES
 (1, 'Al-Sawah', 'Ahmed', 'Admin@capgemini.com', 'Cap Gemini', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 2),
-(2, 'Jamme', 'Thomas', 'Client@capgemini.com', 'EDF', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1);
+(2, 'Jamme', 'Thomas', 'Client@capgemini.com', 'TRI', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1);
 
 --
 -- Index pour les tables exportées
@@ -268,7 +260,7 @@ ALTER TABLE `Avancements`
 -- AUTO_INCREMENT pour la table `Demandes`
 --
 ALTER TABLE `Demandes`
-  MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=85;
+  MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=87;
 --
 -- AUTO_INCREMENT pour la table `Etats`
 --
@@ -278,7 +270,7 @@ ALTER TABLE `Etats`
 -- AUTO_INCREMENT pour la table `Ligne_Chiffrages`
 --
 ALTER TABLE `Ligne_Chiffrages`
-  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=795;
+  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=803;
 --
 -- AUTO_INCREMENT pour la table `Perimetres`
 --
@@ -288,7 +280,7 @@ ALTER TABLE `Perimetres`
 -- AUTO_INCREMENT pour la table `Utilisateurs`
 --
 ALTER TABLE `Utilisateurs`
-  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
 --
 -- Contraintes pour les tables exportées
 --
