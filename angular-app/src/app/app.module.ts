@@ -33,6 +33,7 @@ const appRoutes: Routes = [
   { path: 'formulaireclient', canActivate: [AuthGuardService], component: FormulaireclientComponent },
   { path: 'formulaireadmin/:id', canActivate: [AuthGuardService], data: { roles: [Role.Admin] }, component: FormulaireadminComponent },
   { path: 'resumeprojet/:iduser/:iddemande', canActivate: [AuthGuardService, VerificationDemandeService], component: ResumeprojetComponent},
+  // tslint:disable-next-line: max-line-length
   { path: 'resumeprojetadmin/:iddemande', canActivate: [AuthGuardService , VerificationDemandeService], data: { roles: [Role.Admin] }, component: ResumeprojetadminComponent},
   { path: 'etatprojet', canActivate: [AuthGuardService],  data: { roles: [Role.User] }, component: EtatprojetComponent},
   { path: 'etatprojetadmin', canActivate: [AuthGuardService], data: { roles: [Role.Admin] }, component: EtatprojetadminComponent},

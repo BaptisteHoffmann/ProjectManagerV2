@@ -45,7 +45,8 @@ export class ResumeprojetComponent implements OnInit {
 
     /* Comparaison (pour un client) de id utilisateur url et id utilisateur cookie pour vérifier si le projet
     lui appartient. Sinon redirection page d'accueil */
-    if (this.useridurl != this.userinfos.id_utilisateur) {
+    // tslint:disable-next-line: triple-equals
+    if (this.useridurl != this.userinfos.id_utilisateur) { // ne pas changer le !=
       this.router.navigate(['/etatprojet']); // redirection
     }
 
@@ -72,28 +73,10 @@ export class ResumeprojetComponent implements OnInit {
 
   }
 
-  // On vérifie si on est à l'état 3 ou +
-  isAfficherChiffrage(etat: number) {
-    if (etat >= 3) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  // On vérifie qu'on est pile à l'état 3
-  isAfficherBoutonChiffrage(etat: number) {
-    if (etat === 3) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   // Permet de récupérer les controles sur le formulaire notamment les retours d'erreurs avec la fonction f()
   get f() { return this.formulaireForm.controls; }
 
-  // Envoi du formulaire vers nodeJS
+  // Envoi du formulaire
   onClickValider(bouton: string) {
     this.submitted = true;
     console.log('debut de fonction');
@@ -103,42 +86,58 @@ export class ResumeprojetComponent implements OnInit {
       console.log('accepter');
       this.formulaireForm.get('commentaire').setValue(''); // pas de commentaire côté client dans ce cas donc on envoie ''
       this.formulaireForm.get('etatProjet').setValue('4'); // passe à l'etat 4 = chiffrage accepté
-      this.formulaireForm.get('validationChiffrage').setValue('Chiffrage accepté'); // remarque de validation
-      this.resumeProjet.setCommentaireChiffrage(this.iddemande, this.formulaireForm);
-      window.location.reload();
+      this.formulaireForm.get('validationChiffrage').setValue('Chiffrage accepté'); // information de validation
+      this.resumeProjet.setCommentaireChiffrage(this.iddemande, this.formulaireForm).subscribe((data: string[]) => {
+        console.log(data);
+        this.resumeProjet.getResumeProjetClient(this.userinfos.id_utilisateur, this.iddemande).subscribe((data2: string[]) => {
+          this.tableauProjets = data2;
+          console.log(this.tableauProjets);
+        });
+      }); // setCommentaireChiffrage (research-bdd.service.ts)
     }
 
+    // Si il y a une erreur dans le formulaire on retourne l'erreur
     if (this.formulaireForm.invalid) {
         return;
     }
 
     // cas ou le client refuse le chiffrage
     if (bouton === 'refus') {
-    console.log('refus');
-    this.formulaireForm.get('etatProjet').setValue('7'); // passe a l'etat 7 = projet annulé
-    this.formulaireForm.get('validationChiffrage').setValue('Chiffrage refusé'); // remarque de validation
-    this.resumeProjet.setCommentaireChiffrage(this.iddemande, this.formulaireForm);
+      console.log('refus');
+      this.formulaireForm.get('etatProjet').setValue('7'); // passe a l'etat 7 = projet annulé
+      this.formulaireForm.get('validationChiffrage').setValue('Chiffrage refusé'); // information de validation
+      this.resumeProjet.setCommentaireChiffrage(this.iddemande, this.formulaireForm).subscribe((data: string[]) => {
+        console.log(data);
+        this.resumeProjet.getResumeProjetClient(this.userinfos.id_utilisateur, this.iddemande).subscribe((data2: string[]) => {
+          this.tableauProjets = data2;
+          console.log(this.tableauProjets);
+        });
+      }); // setCommentaireChiffrage (research-bdd.service.ts)
     }
 
     // cas ou le client accepte le chiffrage avec réserve
     if (bouton === 'réserve') {
-    console.log('réserve');
-    this.formulaireForm.get('etatProjet').setValue('2'); // retour à l'etat 2 = Traitement en cours
-    this.formulaireForm.get('validationChiffrage').setValue('Chiffrage accepté avec réserve'); // remarque de validation
-    this.resumeProjet.setCommentaireChiffrage(this.iddemande, this.formulaireForm); // On envoie les informations à nodeJS
+      console.log('réserve');
+      this.formulaireForm.get('etatProjet').setValue('2'); // retour à l'etat 2 = Traitement en cours
+      this.formulaireForm.get('validationChiffrage').setValue('Chiffrage accepté avec réserve'); // information de validation
+      this.resumeProjet.setCommentaireChiffrage(this.iddemande, this.formulaireForm).subscribe((data: string[]) => {
+        console.log(data);
+        this.resumeProjet.getResumeProjetClient(this.userinfos.id_utilisateur, this.iddemande).subscribe((data2: string[]) => {
+          this.tableauProjets = data2;
+          console.log(this.tableauProjets);
+        });
+      }); // setCommentaireChiffrage (research-bdd.service.ts)
     }
-    window.location.reload();
-    // this.router.navigate(['/etatprojet']); // redirection
   }
 
 
 
-  // Permet de réinitialiser le commentaire car commun entre les différents boutons
+  // Permet de réinitialiser le champ commentaire car commun entre les différents boutons
   reinitialiseCommentaire() {
     this.formulaireForm.get('commentaire').setValue('');
   }
 
-  // Vérifie si le chiffrage a une remarque de validation
+  // Vérifie si le chiffrage a une information de validation (refus / accepté / avec réserve)
   isValidationChiffrage() {
     if ( this.tableauProjets && this.tableauProjets[0].validation_chiffrage === null) {
       return false;
@@ -147,6 +146,7 @@ export class ResumeprojetComponent implements OnInit {
     }
   }
 
+  // Vérifie si il y a une remarque de validation pour le chiffrage (Remarque = Commentaire)
   isRemarqueValidation() {
     if ( (this.tableauProjets && this.tableauProjets[0].remarque_validation === null) ||
      (this.tableauProjets && this.tableauProjets[0].remarque_validation === '') ) {
@@ -156,6 +156,7 @@ export class ResumeprojetComponent implements OnInit {
     }
   }
 
+  // Vérifie si l'état du projet est à 3 pile
   isDemandeChiffre() {
     if ( this.tableauProjets && this.tableauProjets[0].fk_etat_id === 3) {
       return true;
@@ -164,6 +165,7 @@ export class ResumeprojetComponent implements OnInit {
     }
   }
 
+  // Vérifie si l'état du projet est à 3 ou +
   isApresChiffrage() {
     if (this.tableauProjets && this.tableauProjets[0] && this.tableauProjets[0].fk_etat_id >= 3) {
       return true;

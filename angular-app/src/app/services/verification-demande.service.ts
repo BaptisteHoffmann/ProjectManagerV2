@@ -21,7 +21,7 @@ canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const routeurl = route.url[0].path;
 
     if (currentUser) {
-      if (currentUser.droit_utilisateur == Role.Admin) {
+      if (currentUser.droit_utilisateur === Role.Admin) {
         switch (routeurl) {
           case 'resumeprojetadmin':
             this.resumeProjet.getResumeProjetAdmin(

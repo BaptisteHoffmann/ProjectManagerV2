@@ -40,9 +40,9 @@ export class DynamicScriptLoaderService {
         let script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = this.scripts[name].src;
-        if (script.readyState) {  //IE
+        if (script.readyState) {  // IE
             script.onreadystatechange = () => {
-                if (script.readyState === "loaded" || script.readyState === "complete") {
+                if (script.readyState === 'loaded' || script.readyState === 'complete') {
                     script.onreadystatechange = null;
                     this.scripts[name].loaded = true;
                     resolve({script: name, loaded: true, status: 'Loaded'});

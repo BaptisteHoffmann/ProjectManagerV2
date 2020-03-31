@@ -20,7 +20,7 @@ canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         // check if route is restricted by role
         if (route.data.roles && route.data.roles.indexOf(currentUser.droit_utilisateur) === -1) {
             // role not authorised so redirect to home page
-            if (currentUser.droit_utilisateur == Role.Admin) {
+            if (currentUser.droit_utilisateur === Role.Admin) {
               this.router.navigate(['/etatprojetadmin']);
               return false;
             } else {

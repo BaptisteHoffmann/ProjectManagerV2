@@ -15,6 +15,7 @@ export class ListUsersComponent implements OnInit {
   ngOnInit() {
     this.fctbdd.getUtilisateurs().subscribe((data: string[]) => {
       this.utilisateurs = data;
+      console.log(this.utilisateurs);
       // for (const iterator of this.utilisateurs) {
       //   console.log(Object.keys(iterator).map(key => iterator[key]));
       // }

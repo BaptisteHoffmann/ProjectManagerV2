@@ -10,7 +10,9 @@ import { ResearchBDDService } from '../services/research-bdd.service';
 })
 export class CreationusersComponent implements OnInit {
   formulaireForm: FormGroup;
-  regexNom: RegExp = /(?!.*[\.\-\_]{2,})^[a-zA-Z0-9\.\-\_]{3,30}$/;
+  regexEmail: RegExp = (/^([\w-\.]+)@((?:[\w-]+\.)+)([a-zA-Z]{2,4})/i);
+  // regexNom: RegExp = /(?!.*[\.\-\_]{2,})^[a-zA-Z0-9\.\-\_]{3,50}$/;
+  regexNom: RegExp = /(?!.*[\- ]{2,})^[a-zA-Z0-9\- ]{3,30}$/;
   passwordRegex: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
   submitted = false;
 
@@ -22,28 +24,39 @@ export class CreationusersComponent implements OnInit {
       login: ['',
         [
           Validators.required,
-          Validators.pattern(this.regexNom)
+          Validators.maxLength(50),
+          Validators.pattern(this.regexEmail)
           // Validators.pattern('^[a-zA-Z\s]*$')
         ]
       ],
       nom: ['',
         [
-          Validators.required
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.pattern(this.regexNom)
         ]
       ],
       prenom: ['',
         [
-          Validators.required
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.pattern(this.regexNom)
         ]
       ],
       mdp: ['',
       [
           Validators.required,
+          Validators.maxLength(50),
           Validators.pattern(this.passwordRegex)
         ]
       ],
       droit: ['', [Validators.required]],
-      entreprise: ['', [Validators.required]]
+      entreprise: ['',
+        [
+        Validators.required,
+        Validators.maxLength(50)
+        ]
+      ]
     });
   }
 
@@ -64,11 +77,11 @@ export class CreationusersComponent implements OnInit {
         return;
     }
     console.log('creation');
-    this.fctbdd.setCreationUser(this.formulaireForm);
-    // console.log(this.test);
-    // console.log(this.formulaireForm.get('droit').value);
-    // console.log('Données du formulaire...', this.formulaireForm.value);
-    this.router.navigate(['/utilisateurs']);
+    this.fctbdd.setCreationUser(this.formulaireForm).subscribe((data: string[]) => {
+      console.log(data);
+      // Redirection
+      this.router.navigate(['/utilisateurs']);
+    });
   }
 
   retour() {

@@ -19,7 +19,7 @@ export class EtatprojetComponent implements OnInit {
   shaObj: any;
 
   constructor( private etatProjet: ResearchBDDService, private router: Router, private user: AuthenticationService) {
-    this.currentUser = this.user.currentUserValue;
+    this.currentUser = this.user.currentUserValue; // cookie
   }
 
   ngOnInit() {
