@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mer 25 Mars 2020 à 15:18
+-- Généré le :  Mar 31 Mars 2020 à 15:14
 -- Version du serveur :  5.5.64-MariaDB
 -- Version de PHP :  5.4.16
 
@@ -64,15 +64,14 @@ CREATE TABLE IF NOT EXISTS `Demandes` (
   `Total` double DEFAULT NULL,
   `fk_utilisateur_id` int(11) NOT NULL,
   `fk_etat_id` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `Demandes`
 --
 
 INSERT INTO `Demandes` (`id_demande`, `nom_demande`, `nom_demandeur`, `description`, `date_demande`, `date_chiffrage`, `date_demarrage`, `date_livraison`, `code_nop`, `fonction`, `reference_client`, `validation_chiffrage`, `remarque_validation`, `reference_interne`, `Total`, `fk_utilisateur_id`, `fk_etat_id`) VALUES
-(26, 'Projet Capgemini', 'thomas', 'projet master tri', '2020-02-02', '2020-03-25', NULL, NULL, 'x565', 'étudiant', 'thomas', 'Chiffrage accepté', '', 'thomas', 1, 2, 4),
-(34, 'GT DATA - MIGRATION VERS AIX', 'Stéphane JUBEAU', 'construction de l''architecture d''hébergement de l''application Abus de Marché de Reuters :\n\napplication 3-Tiers : AS, BDD, ETL\n3 environnements : Dev, Homol et Production\n\n- AS : 4 VM RHEL + Oracle JDK\n- ETL : 3 VM RHEL + Oracle JRE\n- BDD : 2 LPAR avec BDD Oracle\n- publication application Citrix\n\nCriticité Application : a définir suite retrait de la redondance\nPCA/PRA : à definir suite retrait de la redondance\n5 utilisateurs\nenviron 4 To de stockage', '2020-02-29', '2020-03-12', NULL, NULL, 'A DEFINIR', 'CDP', 'F45', NULL, NULL, 'X24', 30581366, 2, 2);
+(34, 'GT DATA - MIGRATION VERS LYON', 'Stéphane JUBEAU', 'construction de l''architecture d''hébergement de l''application Abus de Marché de Reuters :\n\napplication 3-Tiers : AS, BDD, ETL\n3 environnements : Dev, Homol et Production\n\n- AS : 4 VM RHEL + Oracle JDK\n- ETL : 3 VM RHEL + Oracle JRE\n- BDD : 2 LPAR avec BDD Oracle\n- publication application Citrix\n\nCriticité Application : a définir suite retrait de la redondance\nPCA/PRA : à definir suite retrait de la redondance\n5 utilisateurs\nenviron 4 To de stockage', '2020-02-29', '2020-03-31', NULL, NULL, 'A DEFINIR', 'CDP', 'F45', 'Chiffrage accepté', '', 'X24', 670, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -90,9 +89,6 @@ CREATE TABLE IF NOT EXISTS `Demandes_Perimetres` (
 --
 
 INSERT INTO `Demandes_Perimetres` (`fk_demande_id`, `fk_perimetre_id`) VALUES
-(26, 1),
-(26, 3),
-(26, 4),
 (34, 1),
 (34, 2),
 (34, 3),
@@ -143,14 +139,13 @@ CREATE TABLE IF NOT EXISTS `Ligne_Chiffrages` (
   `valeur_total` double NOT NULL,
   `remarque` text,
   `fk_avancement_id` int(11) NOT NULL DEFAULT '2'
-) ENGINE=InnoDB AUTO_INCREMENT=623 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=795 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `Ligne_Chiffrages`
 --
 
 INSERT INTO `Ligne_Chiffrages` (`id_ligne`, `fk_demande_id`, `nom_etape`, `nom_sous_etape`, `nom_acteur`, `nom_grade`, `valeur_charge`, `valeur_tjm`, `valeur_total`, `remarque`, `fk_avancement_id`) VALUES
-(188, 26, 'premiere etape', 'premiere sous etape', 'oui', '1', 10, 1, 1, 'test', 2),
 (555, 34, 'PRE REQUIS', 'NOMMAGE SRV+BDD', 'COVEA FI', 'B2', 1, 20, 20, NULL, 2),
 (558, 34, 'PRE REQUIS', 'CONFIG VM', 'COVEA FI', 'B2', 1, 50, 50, NULL, 2),
 (560, 34, 'PRE REQUIS', 'LICENCE OS ET BDD', 'COVEA FI', 'B2', 1, 200, 200, NULL, 2),
@@ -196,16 +191,15 @@ CREATE TABLE IF NOT EXISTS `Utilisateurs` (
   `nom_entreprise` varchar(32) NOT NULL,
   `mdp_utilisateur` varchar(128) NOT NULL,
   `droit_utilisateur` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `Utilisateurs`
 --
 
 INSERT INTO `Utilisateurs` (`id_utilisateur`, `nom_utilisateur`, `prenom_utilisateur`, `login_utilisateur`, `nom_entreprise`, `mdp_utilisateur`, `droit_utilisateur`) VALUES
-(1, 'Admin', 'Ahmed', 'Al sawah', 'Cap Gemini', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 2),
-(2, 'Client', 'Thomas', 'Jamme', 'EDF', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1),
-(24, 'Ahmed', 'Ahmed', 'Al sawah', 'USMB', '5f75697204af47005af5743a6a59feef680c1c846c3f26ca4b885a57f8c47643024f76d37bd85aa75065d3a58b19d3fc1ce99f12d34fe4814dd9c4c3fee49d19', 1);
+(1, 'Al-Sawah', 'Ahmed', 'Admin@capgemini.com', 'Cap Gemini', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 2),
+(2, 'Jamme', 'Thomas', 'Client@capgemini.com', 'EDF', 'ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 1);
 
 --
 -- Index pour les tables exportées
@@ -259,7 +253,7 @@ ALTER TABLE `Perimetres`
 --
 ALTER TABLE `Utilisateurs`
   ADD PRIMARY KEY (`id_utilisateur`),
-  ADD UNIQUE KEY `nom_utilisateur` (`nom_utilisateur`);
+  ADD UNIQUE KEY `login_utilisateur` (`login_utilisateur`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
@@ -274,7 +268,7 @@ ALTER TABLE `Avancements`
 -- AUTO_INCREMENT pour la table `Demandes`
 --
 ALTER TABLE `Demandes`
-  MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=66;
+  MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=85;
 --
 -- AUTO_INCREMENT pour la table `Etats`
 --
@@ -284,7 +278,7 @@ ALTER TABLE `Etats`
 -- AUTO_INCREMENT pour la table `Ligne_Chiffrages`
 --
 ALTER TABLE `Ligne_Chiffrages`
-  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=623;
+  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=795;
 --
 -- AUTO_INCREMENT pour la table `Perimetres`
 --
@@ -294,7 +288,7 @@ ALTER TABLE `Perimetres`
 -- AUTO_INCREMENT pour la table `Utilisateurs`
 --
 ALTER TABLE `Utilisateurs`
-  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
 -- Contraintes pour les tables exportées
 --
