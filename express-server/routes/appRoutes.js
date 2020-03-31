@@ -84,6 +84,8 @@ module.exports = function(app, path) {
 
     app.post('/userinfos/update', authorize(), todoList.post_userinfos);
 
+    app.post('/userinfos/updatepassword', authorize(), todoList.post_userinfoPassword);
+
     // Compteur des demandes de projet en fonction des utilisateurs
 
     app.get('/countdemandes',  authorize(Role.Admin), todoList.get_countdemandes);

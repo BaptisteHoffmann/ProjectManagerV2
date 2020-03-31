@@ -277,8 +277,20 @@ User.selectUser = function (IdUser, result) {
       });
 };
 
-User.updateUserInfos = function (nom_entreprise, nom, prenom, password, droit_utilisateur, iduser, result) {
-  sql.query("UPDATE Utilisateurs SET nom_entreprise = ?, nom_utilisateur = ?, prenom_utilisateur = ?, mdp_utilisateur = ?, droit_utilisateur = ? WHERE `id_utilisateur` = ?", [nom_entreprise, nom, prenom, password, droit_utilisateur, iduser], function (err, res) {
+User.updateUserInfos = function (nom_entreprise, nom, prenom, droit_utilisateur, iduser, result) {
+  sql.query("UPDATE Utilisateurs SET nom_entreprise = ?, nom_utilisateur = ?, prenom_utilisateur = ?, droit_utilisateur = ? WHERE `id_utilisateur` = ?", [nom_entreprise, nom, prenom, droit_utilisateur, iduser], function (err, res) {
+          if(err) {
+            console.log("error: ", err);
+            result(null, err);
+          }
+          else{
+            result(null, res);
+          }
+      });
+};
+
+User.updateUserinfoPassword = function (password, iduser, result) {
+  sql.query("UPDATE Utilisateurs SET mdp_utilisateur = ? WHERE `id_utilisateur` = ?", [password, iduser], function (err, res) {
           if(err) {
             console.log("error: ", err);
             result(null, err);

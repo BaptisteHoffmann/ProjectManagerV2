@@ -287,7 +287,7 @@ exports.post_userinfos = function(req, res) {
   const nom_entreprise = req.body.formulaireuser.nomentreprise;
   const nom = req.body.formulaireuser.nom;
   const prenom = req.body.formulaireuser.prenom;
-  const password = sha512(req.body.formulaireuser.password);
+  // const password = sha512(req.body.formulaireuser.password);
   let droit_utilisateur = req.body.formulaireuser.droitutilisateur;
 
   // only allow current client to see his different requests
@@ -295,18 +295,38 @@ exports.post_userinfos = function(req, res) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  if(droit_utilisateur == 'Admin') {
+  if(droit_utilisateur == 'Administrateur') {
     droit_utilisateur = Role.Admin;
   } else {
     droit_utilisateur = Role.User;
   }
 
-  User.updateUserInfos(nom_entreprise, nom, prenom, password, droit_utilisateur, iduser, function(err, user) {
+  User.updateUserInfos(nom_entreprise, nom, prenom, droit_utilisateur, iduser, function(err, user) {
     if (err) {
       res.send(err); // Renvoie l'erreur que la bdd a généré
     }
     else {
       res.json(user); // Renvoie le résultat si aucune erreur
+    }
+  });
+};
+
+exports.post_userinfoPassword = function(req, res) {
+  const currentUser = req.user;
+  const iduser = parseInt(req.body.idUser);
+  const password = sha512(req.body.formulaireuser.password);
+
+  // only allow current client to see his different requests
+  if (iduser !== currentUser.sub && currentUser.role == Role.User) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  User.updateUserinfoPassword(password, iduser, function(err, user) {
+    if (err) {
+      res.send(err);
+    }
+    else {
+      res.json(user);
     }
   });
 };
