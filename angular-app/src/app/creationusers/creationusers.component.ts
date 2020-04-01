@@ -10,9 +10,9 @@ import { ResearchBDDService } from '../services/research-bdd.service';
 })
 export class CreationusersComponent implements OnInit {
   formulaireForm: FormGroup;
-  regexEmail: RegExp = (/^([\w-\.]+)@((?:[\w-]+\.)+)([a-zA-Z]{2,4})/i);
+  regexEmail: RegExp = (/^([\w-\.]+)@((?:[\w-]+\.)+)([a-zA-Z]{2,3}$)/i);
   // regexNom: RegExp = /(?!.*[\.\-\_]{2,})^[a-zA-Z0-9\.\-\_]{3,50}$/;
-  regexNom: RegExp = /(?!.*[\- ]{2,})^[a-zA-Z0-9\- ]{3,30}$/;
+  regexNom: RegExp = /(?!.*[\- ]{2,})^[a-zA-Z\- ]{3,30}$/;
   passwordRegex: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
   submitted = false;
 
