@@ -20,7 +20,7 @@ export class UserComponent implements OnInit {
   prenom: string;
   currentUser: any;
   // regexNom: RegExp = /(?!.*[\.\-\_]{2,})^[a-zA-Z0-9\.\-\_]{3,50}$/;
-  regexNom: RegExp = /(?!.*[\- ]{2,})^[a-zA-Z0-9\- ]{3,30}$/;
+  regexNom: RegExp = /(?!.*[\- ]{2,})^[a-zA-Z\- ]{3,30}$/;
   passwordRegex: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
   submitted = false;
 
