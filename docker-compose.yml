@@ -19,7 +19,7 @@ services:
       - applinetwork
 
   angular-app: # name of the first service
-    build: my-app # specify the directory of the Dockerfile
+    build: angular-app # specify the directory of the Dockerfile
     ports:
       - "4200:4200" # specify port forewarding
     networks:

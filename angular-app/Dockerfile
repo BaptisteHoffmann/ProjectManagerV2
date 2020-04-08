@@ -6,18 +6,23 @@
 FROM node:12.16.1 as build
 
 # set working directory
-WORKDIR /app
+WORKDIR /my-app
 
 # add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /my-app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
-COPY package.json /app/package.json
-RUN npm install
+# COPY package.json /my-app/package.json
+# RUN npm install
 RUN npm install -g @angular/cli@8.3.17
+RUN echo "y" | ng new my-app --style=scss --skip-tests=true --directory ./
+
+COPY package.json /my-app/package.json
+RUN npm install
 
 # add app
-COPY . /app
+# COPY . /app
+COPY src /my-app/src
 
 # generate build
 # RUN ng build --output-path=dist
