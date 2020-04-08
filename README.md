@@ -58,6 +58,8 @@ docker-compose version
 
 ## Utilisation de Docker-compose
 
+Contenu du docker-compose :
+
 ```bash
 version: '3.7' # specify docker-compose version
 
