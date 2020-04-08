@@ -15,11 +15,11 @@ ENV PATH /project-manager/node_modules/.bin:$PATH
 RUN npm install -g @angular/cli@8.3.17
 RUN echo "y" | ng new project-manager --style=scss --skip-tests=true --directory ./
 
-COPY package.json /my-app/package.json
+COPY package.json /project-manager/package.json
 RUN npm install
 
 # add src files
-COPY src /my-app/src
+COPY src /project-manager/src
 
 # generate build
 # RUN ng build --output-path=dist
