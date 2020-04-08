@@ -4,7 +4,7 @@ Outils de création, de validation et de gestion de projets
 
 # Outils et logiciels requis pour l'application
 
-# Logiciels requis #
+# Outils open source inclus et utilisés #
 
 - Angular CLI
   * Version 8.3.17
@@ -14,20 +14,14 @@ Outils de création, de validation et de gestion de projets
   * Version 12.13.0
 
 - Docker
-  * Dernière version
+  * Version 19.03.8
   
 - Docker Compose
-  * Dernière version
-
-# Outils open source inclus et utilisés #
-
-  * Angular
-  * NodeJS / NPM
-  * Docker
+  * Version 1.25.4
   
 ## Installation
 
-**Avant de proceder :** veuillez bien installer les outils en pré requis
+**Avant de proceder :** veuillez bien installer les outils docker et docker-compose
 
 ## Verification des differents outils
 
@@ -53,6 +47,12 @@ docker-compose version
 
 ### Les commandes utiles au niveau d'Angular :
 
+Version d'Angular
+```bash
+ng version
+```
+
+Aide au niveau d'Angular
 ```bash
 ng help
 ```
@@ -75,6 +75,11 @@ cd NOM-DU-PROJET-ANGULAR
 ```
 
 ### Les commandes utiles au niveau de NodeJS :
+
+Version de NodeJS
+```bash
+node -v
+```
 
 Lancer le serveur node :
 ```bash
