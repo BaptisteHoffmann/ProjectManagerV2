@@ -6,22 +6,19 @@
 FROM node:12.16.1 as build
 
 # set working directory
-WORKDIR /my-app
+WORKDIR /project-manager
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /my-app/node_modules/.bin:$PATH
+# add `/project-manager/node_modules/.bin` to $PATH
+ENV PATH /project-manager/node_modules/.bin:$PATH
 
 # install and cache app dependencies
-# COPY package.json /my-app/package.json
-# RUN npm install
 RUN npm install -g @angular/cli@8.3.17
-RUN echo "y" | ng new my-app --style=scss --skip-tests=true --directory ./
+RUN echo "y" | ng new project-manager --style=scss --skip-tests=true --directory ./
 
 COPY package.json /my-app/package.json
 RUN npm install
 
-# add app
-# COPY . /app
+# add src files
 COPY src /my-app/src
 
 # generate build
