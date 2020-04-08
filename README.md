@@ -8,12 +8,10 @@ Outils de création, de validation et de gestion de projets
 
 - Angular CLI
   * Version 8.3.17
-  * Front
 
 
 - NPM / NodeJS
   * Version 12.13.0
-  * Back
 
 - Docker
   * Dernière version
@@ -40,25 +38,6 @@ Outils de création, de validation et de gestion de projets
 git clone https://github.com/AhmedALSGit/ProjectManager.git
 ```
 
-### Verification du fonctionnement d'Angular
-
-```bash
-ng help
-```
-
-### Generation d'un projet
-
-```bash
-ng new NOM-DU-PROJET-ANGULAR
-cd NOM-DU-PROJET-ANGULAR
-```
-
-### Copier le contenu du dossier angular-app à la racine du projet Angular crée précédemment
-
-```bash
-cp -rf ~/ProjectManager/angular-app/* ~/ProjectManager/NOM-DU-PROJET-ANGULAR/
-```
-
 
 ### Verification du fonctionnement de Docker
 
@@ -74,6 +53,10 @@ docker-compose version
 
 ### Les commandes utiles au niveau d'Angular :
 
+```bash
+ng help
+```
+
 Lancer un projet en developpement :
 ```bash
 ng serve --host 0.0.0.0 # Autorise tous les domaines
@@ -82,6 +65,13 @@ ng serve --host 0.0.0.0 # Autorise tous les domaines
 Génerer des composants (pages), services et autres :
 ```bash
 ng generate --help
+```
+
+### Generation d'un projet
+
+```bash
+ng new NOM-DU-PROJET-ANGULAR
+cd NOM-DU-PROJET-ANGULAR
 ```
 
 ### Les commandes utiles au niveau de NodeJS :
@@ -98,8 +88,6 @@ nodemon fichier-serveur.js
 ```
 
 ## Utilisation de Docker-compose
-
-**Avant d'utiliser le fichier docker-compose.yml :** il faut modifier le nom du projet angular dans le fichier docker-compose comme indiqué en bas
 
 ```bash
 version: '3.7' # specify docker-compose version
@@ -135,7 +123,7 @@ services:
     command: bash -c "./wait-for-it.sh --timeout=0 database-app:3306 && npm start"
 
   angular: # name of the first service
-    build: CHANGEZ LE NOM PAR LE NOM DU PROJET ANGULAR # specify the directory of the Dockerfile
+    build: angular-app
     ports:
       - "4200:4200" # specify port forewarding
     networks:
@@ -143,7 +131,6 @@ services:
       - applinetwork
 ```
 
-Une fois le fichier docker-compose.yml modifié et le projet Angular créé avec les fichiers sources ajoutés;
 On doit pouvoir exécuter la commande docker-compose décrit ci-dessous :
 
 ```bash
