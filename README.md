@@ -56,53 +56,6 @@ docker version
 docker-compose version
 ```
 
-### Les commandes utiles au niveau d'Angular :
-
-Version d'Angular
-```bash
-ng version
-```
-
-Aide au niveau d'Angular
-```bash
-ng help
-```
-
-Lancer un projet en developpement :
-```bash
-ng serve --host 0.0.0.0 # Autorise tous les domaines
-```
-
-Génerer des composants (pages), services et autres :
-```bash
-ng generate --help
-```
-
-### Generation d'un projet
-
-```bash
-ng new NOM-DU-PROJET-ANGULAR
-cd NOM-DU-PROJET-ANGULAR
-```
-
-### Les commandes utiles au niveau de NodeJS :
-
-Version de NodeJS
-```bash
-node -v
-```
-
-Lancer le serveur node :
-```bash
-node fichier-serveur.js
-```
-
-Redemarrer le serveur node à chaque changement dans un fichier du serveur node : \
-(En developpement)
-```bash
-nodemon fichier-serveur.js
-```
-
 ## Utilisation de Docker-compose
 
 ```bash
@@ -238,4 +191,53 @@ express-app_1   |
 express-app_1   | > projetperso@0.0.0 start /app
 express-app_1   | > node /app/servernd.js
 express-app_1   | 
+```
+
+## Commandes Angular et NodeJS
+
+### Les commandes utiles au niveau d'Angular :
+
+Version d'Angular
+```bash
+ng version
+```
+
+Aide au niveau d'Angular
+```bash
+ng help
+```
+
+Lancer un projet en developpement :
+```bash
+ng serve --host 0.0.0.0 # Autorise tous les domaines
+```
+
+Génerer des composants (pages), services et autres :
+```bash
+ng generate --help
+```
+
+### Generation d'un projet
+
+```bash
+ng new NOM-DU-PROJET-ANGULAR
+cd NOM-DU-PROJET-ANGULAR
+```
+
+### Les commandes utiles au niveau de NodeJS :
+
+Version de NodeJS
+```bash
+node -v
+```
+
+Lancer le serveur node :
+```bash
+node fichier-serveur.js
+```
+
+Redemarrer le serveur node à chaque changement dans un fichier du serveur node : \
+(En developpement)
+```bash
+nodemon fichier-serveur.js
 ```
