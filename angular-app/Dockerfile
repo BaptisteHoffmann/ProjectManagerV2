@@ -20,6 +20,7 @@ RUN npm install
 
 # add src files
 COPY src /project-manager/src
+COPY proxy.conf.json /project-manager/
 
 # generate build
 # RUN ng build --output-path=dist
