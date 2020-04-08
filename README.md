@@ -4,20 +4,20 @@ Outils de création, de validation et de gestion de projets
 
 # Outils et logiciels requis pour l'application
 
-# Outils open source inclus et utilisés #
-
-- Angular CLI
-  * Version 8.3.17
-
-
-- NPM / NodeJS
-  * Version 12.13.0
+# Logiciels requis #
 
 - Docker
   * Version 19.03.8
   
 - Docker Compose
   * Version 1.25.4
+
+# Outils open source inclus et utilisés #
+
+  * Angular
+  * NodeJS / NPM
+  * Mariadb
+  * Docker / Docker-compose
   
 ## Installation
 
